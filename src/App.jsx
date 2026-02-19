@@ -2,6 +2,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "sonner"
 import './App.css'
 import WorkoutPlanPage from "@/pages/workout/WorkoutPlanPage";
+import Login from "./pages/auth/loginPage";
+import Signup from "./pages/auth/signupPage";
+import ProfilePage from "./pages/profile/ProfilePage";
+import PerformancePage from "./pages/performance/PerformancePage";
 
 function App() {
   
@@ -21,8 +25,11 @@ function App() {
       />
 
       <Routes>
-        <Route path="/"        element={<Navigate to="/workout" replace />} />
+        <Route path="/login"        element={<Login />} />
+        <Route path="/" element={<Signup/>} />
+        <Route path="/profile" element={<ProfilePage/>}/>
         <Route path="/workout" element={<WorkoutPlanPage />} />
+        <Route path="/performance" element={<PerformancePage/>}/>
       </Routes>
     </BrowserRouter>
   )

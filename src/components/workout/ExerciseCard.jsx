@@ -6,8 +6,8 @@
 // Has swap and remove buttons on hover.
 // ─────────────────────────────────────────────────────────────────
 import { useState } from "react";
-import { Badge }   from "@/components/ui/badge";
-import { Button }  from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronDown, RefreshCw, Trash2 } from "lucide-react";
 import { MUSCLE_META, DIFFICULTY_COLOR } from "@/constants/workout.constants";
@@ -130,6 +130,21 @@ export default function ExerciseCard({ exercise, index, onSwap, onRemove }) {
             <p className="text-xs text-zinc-400 leading-relaxed">
               {exercise.exercise?.instructions}
             </p>
+            {exercise.exercise?.video_url && (
+              <a
+                href={exercise.exercise.video_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 mt-3 text-xs font-semibold
+                  text-red-400 hover:text-red-300 transition-colors"
+              >
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 2.7 12 2.7 12 2.7s-4.2 0-6.8.2c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.5 21.5 12 21.5 12 21.5s4.2 0 6.8-.3c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z" />
+                </svg>
+                Watch Tutorial
+              </a>
+            )}
+
 
             {/* Tags */}
             {exercise.exercise?.tags?.length > 0 && (
