@@ -1,14 +1,8 @@
-// src/pages/workout/EmptyPlanPage.jsx
-// ─────────────────────────────────────────────────────────────────
-// Shown when the user doesn't have a workout plan yet.
-// Has a single "Generate My Plan" button.
-// ─────────────────────────────────────────────────────────────────
+
 import { Button } from "@/components/ui/button";
 import { Zap }    from "lucide-react";
 
-// Props:
-//   onGenerate - function to call when user clicks the button
-//   loading    - shows spinner while plan is being generated
+
 export default function EmptyPlanPage({ onGenerate, loading }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center px-4">

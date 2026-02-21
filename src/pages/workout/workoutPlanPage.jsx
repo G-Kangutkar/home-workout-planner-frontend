@@ -1,9 +1,6 @@
-// src/pages/workout/WorkoutPlanPage.jsx
-// ─────────────────────────────────────────────────────────────────
-// The main workout plan page.
-// ─────────────────────────────────────────────────────────────────
+
 import { useState, useEffect, useCallback } from "react";
-import { toast } from "sonner"; // ✅ sonner instead of shadcn toast
+import { toast } from "sonner"; 
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Dumbbell } from "lucide-react";
 
@@ -16,7 +13,6 @@ import SwapModal from "@/components/workout/SwapModel";
 import RenameModal from "@/components/workout/RenameModal";
 import EmptyPlanPage from "@/pages/workout/EmptyPlanPage";
 
-// Constants + API
 import { DAYS_ORDER, DAY_FULL } from "@/constants/workout.constants";
 import {
   getActivePlan,
@@ -28,7 +24,7 @@ import {
 import Navbar from "@/components/Navbar";
 import CompleteWorkoutButton from "@/components/workout/CompleteWorkoutButton";
 
-// ── Background glow decoration ────────────────────────────────────
+//  Background glow decoration 
 function BackgroundDecor() {
   return (
     <div className="pointer-events-none fixed inset-0 overflow-hidden -z-10">
@@ -40,7 +36,7 @@ function BackgroundDecor() {
   );
 }
 
-// ── Loading skeleton ──────────────────────────────────────────────
+// Loading skeleton 
 function LoadingSkeleton() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -51,12 +47,9 @@ function LoadingSkeleton() {
   );
 }
 
-// ════════════════════════════════════════════════════════════════
-// MAIN PAGE COMPONENT
-// ════════════════════════════════════════════════════════════════
 export default function WorkoutPlanPage() {
 
-  // ── State ─────────────────────────────────────────────────────
+
   const [plan, setPlan] = useState(null);
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
@@ -70,7 +63,7 @@ export default function WorkoutPlanPage() {
     new Date().getDay() === 0 ? 6 : new Date().getDay() - 1
   ];
 
-  // ── Fetch active plan ─────────────────────────────────────────
+  //  Fetch active plan 
   const fetchPlan = useCallback(async () => {
     setLoading(true);
     setError("");
@@ -93,7 +86,7 @@ export default function WorkoutPlanPage() {
 
   useEffect(() => { fetchPlan(); }, [fetchPlan]);
 
-  // ── Generate plan ─────────────────────────────────────────────
+  //  Generate plan 
   const handleGenerate = async () => {
     setGenerating(true);
     setError("");
@@ -109,19 +102,19 @@ export default function WorkoutPlanPage() {
     }
   };
 
-  // ── Rename plan ───────────────────────────────────────────────
+  //  Rename plan 
   const handleRename = async (newName) => {
     try {
       await renamePlan(plan.id, newName);
       setPlan((prev) => ({ ...prev, name: newName }));
       setShowRename(false);
-      toast.success("Plan renamed!"); // ✅ sonner syntax
+      toast.success("Plan renamed!"); 
     } catch (err) {
-      toast.error(err.message); // ✅ sonner syntax
+      toast.error(err.message); 
     }
   };
 
-  // ── Swap exercise ─────────────────────────────────────────────
+  //  Swap exercise 
   const handleSwap = async (dayExerciseId, newExerciseId) => {
     try {
       const data = await swapExercise(dayExerciseId, newExerciseId);
@@ -135,13 +128,13 @@ export default function WorkoutPlanPage() {
         })),
       }));
       setSwapTarget(null);
-      toast.success("Exercise swapped!"); // ✅ sonner syntax
+      toast.success("Exercise swapped!"); 
     } catch (err) {
-      toast.error(err.message); // ✅ sonner syntax
+      toast.error(err.message);
     }
   };
 
-  // ── Remove exercise ───────────────────────────────────────────
+  //  Remove exercise 
   const handleRemove = async (dayExerciseId) => {
     if (!window.confirm("Remove this exercise?")) return;
     try {
@@ -153,16 +146,16 @@ export default function WorkoutPlanPage() {
           exercises: day.exercises.filter((ex) => ex.id !== dayExerciseId),
         })),
       }));
-      toast.success("Exercise removed."); // ✅ sonner syntax
+      toast.success("Exercise removed."); 
     } catch (err) {
-      toast.error(err.message); // ✅ sonner syntax
+      toast.error(err.message); 
     }
   };
 
   // Current active day data
   const activeDayData = plan?.days?.find((d) => d.day === activeDay);
 
-  // ── Render ────────────────────────────────────────────────────
+ 
   return (
     <div><Navbar />
       <div className="min-h-screen" style={{ background: "#0a0a0a" }}>

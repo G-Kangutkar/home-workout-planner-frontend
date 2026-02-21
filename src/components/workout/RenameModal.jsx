@@ -1,8 +1,4 @@
-// src/components/workout/RenameModal.jsx
-// ─────────────────────────────────────────────────────────────────
-// A shadcn Dialog that lets the user rename their workout plan.
-// Opens when user clicks the pencil icon in PlanStats.
-// ─────────────────────────────────────────────────────────────────
+
 import { useState } from "react";
 import {
   Dialog,
@@ -13,12 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input }  from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-// Props:
-//   open        - whether the dialog is visible
-//   currentName - the plan's current name (pre-filled in input)
-//   onClose     - called when user cancels
-//   onSave      - called with the new name when user confirms
+  
 export default function RenameModal({ open, currentName, onClose, onSave }) {
   const [name, setName]     = useState(currentName);
   const [saving, setSaving] = useState(false);

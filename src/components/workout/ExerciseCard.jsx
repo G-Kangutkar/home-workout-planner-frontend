@@ -1,10 +1,4 @@
-// src/components/workout/ExerciseCard.jsx
-// ─────────────────────────────────────────────────────────────────
-// Displays one exercise in the workout day.
-// Shows: name, muscle group, sets/reps, difficulty.
-// Has expand to show instructions + tags.
-// Has swap and remove buttons on hover.
-// ─────────────────────────────────────────────────────────────────
+
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,11 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ChevronDown, RefreshCw, Trash2 } from "lucide-react";
 import { MUSCLE_META, DIFFICULTY_COLOR } from "@/constants/workout.constants";
 
-// Props:
-//   exercise  - full exercise object from API
-//   index     - position in the list (used for number + animation delay)
-//   onSwap    - called when user clicks swap button
-//   onRemove  - called when user clicks remove button
+
 export default function ExerciseCard({ exercise, index, onSwap, onRemove }) {
   // Controls whether the instructions section is visible
   const [showDetails, setShowDetails] = useState(false);
@@ -37,10 +27,10 @@ export default function ExerciseCard({ exercise, index, onSwap, onRemove }) {
 
       <CardContent className="p-4">
 
-        {/* ── Row 1: Exercise number, name, action buttons ── */}
+        {/*  Exercise number, name, action buttons ── */}
         <div className="flex items-start justify-between gap-2 mb-3">
 
-          {/* Left: Number badge + name + muscle badge */}
+          {/*  Number badge + name + muscle badge */}
           <div className="flex items-center gap-2.5">
             <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 border ${meta.badge}`}>
               {index + 1}
@@ -56,7 +46,7 @@ export default function ExerciseCard({ exercise, index, onSwap, onRemove }) {
             </div>
           </div>
 
-          {/* Right: Swap + Remove buttons (visible on hover) */}
+          {/*  Swap + Remove buttons (visible on hover) */}
           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
             <Button
               variant="ghost"
@@ -79,7 +69,7 @@ export default function ExerciseCard({ exercise, index, onSwap, onRemove }) {
           </div>
         </div>
 
-        {/* ── Row 2: Sets / Reps / Difficulty boxes ── */}
+        {/* Sets / Reps / Difficulty boxes*/}
         <div className="flex items-center gap-2 mb-3">
 
           {/* Sets box */}
@@ -109,7 +99,7 @@ export default function ExerciseCard({ exercise, index, onSwap, onRemove }) {
           </div>
         </div>
 
-        {/* ── Row 3: Description + expand toggle ── */}
+        {/*  Description + expand toggle*/}
         <button
           onClick={() => setShowDetails((prev) => !prev)}
           className="w-full flex items-center justify-between text-left gap-2 text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
@@ -118,7 +108,7 @@ export default function ExerciseCard({ exercise, index, onSwap, onRemove }) {
           <ChevronDown className={`w-3.5 h-3.5 shrink-0 transition-transform duration-200 ${showDetails ? "rotate-180" : ""}`} />
         </button>
 
-        {/* ── Expanded: Instructions + Tags ── */}
+        {/* Expanded: Instructions + Tags */}
         {showDetails && (
           <div
             className="mt-3 pt-3 border-t border-zinc-800"

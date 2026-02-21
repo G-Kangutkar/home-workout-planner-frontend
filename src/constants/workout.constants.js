@@ -1,8 +1,3 @@
-// src/constants/workout.constants.js
-// ─────────────────────────────────────────────────────────────────
-// All shared labels, colors, and config used across workout components.
-// Change values here and they update everywhere automatically.
-// ─────────────────────────────────────────────────────────────────
 
 // Days of the week in order (Monday first)
 export const DAYS_ORDER = [

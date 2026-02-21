@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 function Login() {
     const [inputData, setInputData] = useState({
@@ -33,9 +34,9 @@ function Login() {
         try {
             const response = await axios.post('http://localhost:8080/register/login', inputData);
             console.log('Signup successful!', response.data);
-            alert('Account created successfully!');
+            toast.success("Account created successfully!")
             const token = response?.data?.accessToken;
-            console.log('Extracted token:', token);
+            // console.log('Extracted token:', token);
             localStorage.setItem('token', token);
             navigate('/profile')
         } catch (error) {

@@ -1,7 +1,4 @@
-// src/components/workout/CompleteWorkoutButton.jsx
-// ─────────────────────────────────────────────────────────────────
-// Button to mark a workout day as complete and log to performance
-// ─────────────────────────────────────────────────────────────────
+
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";

@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 function Signup() {
     const [inputData, setInputData] = useState({
         name: '',
@@ -32,7 +33,7 @@ function Signup() {
         try {
             const response = await axios.post('http://localhost:8080/register/signup', inputData);
             console.log('Signup successful!', response.data);
-            alert('Account created successfully!');
+            toast.success('Account created successfully!')
             navigate('/login')
         } catch (error) {
             console.log('error at handling form submission', error.message)

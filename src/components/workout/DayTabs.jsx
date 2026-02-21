@@ -1,15 +1,7 @@
-// src/components/workout/DayTabs.jsx
-// ─────────────────────────────────────────────────────────────────
-// Shows 7 day tabs (Mon–Sun). Highlights today automatically.
-// Clicking a tab switches the active day in WorkoutPlanPage.
-// ─────────────────────────────────────────────────────────────────
+
 import { DAYS_ORDER, DAY_SHORT } from "@/constants/workout.constants";
 
-// Props:
-//   activeDay  - which day is currently selected (e.g. "monday")
-//   days       - array of day objects from the API response
-//   todayName  - today's day name (e.g. "tuesday")
-//   onSelect   - function called when user clicks a tab
+
 export default function DayTabs({ activeDay, days, todayName, onSelect }) {
   return (
     <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">

@@ -1,8 +1,4 @@
-// src/components/workout/RestDayCard.jsx
-// ─────────────────────────────────────────────────────────────────
-// Simple card shown when the selected day is a rest day.
-// Encourages recovery with tips.
-// ─────────────────────────────────────────────────────────────────
+
 import { Card, CardContent } from "@/components/ui/card";
 
 // Recovery tips shown at the bottom

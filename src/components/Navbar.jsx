@@ -30,7 +30,7 @@ function Navbar() {
                     <button
                         type="submit"
                         onClick={handleLogout}
-                        className="bg-rose-700 px-3 py-2 sm:px-4 sm:py-2 text-xs sm:text-sm md:text-base rounded-lg sm:rounded-xl text-white hover:bg-rose-800 transition-colors whitespace-nowrap shrink-0"
+                        className="bg-lime-400 px-3 py-2 sm:px-4 sm:py-2 text-xs sm:text-sm md:text-base rounded-lg sm:rounded-xl text-white hover:bg-lime-700 transition-colors whitespace-nowrap shrink-0"
                     >
                         <span className="hidden sm:inline">Log out</span>
                         <span className="sm:hidden">Logout</span>

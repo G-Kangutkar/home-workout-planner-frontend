@@ -1,8 +1,4 @@
 
-// ─────────────────────────────────────────────────────────────────
-// Performance tracking page with charts showing workout stats
-// Uses Recharts for data visualization
-// ─────────────────────────────────────────────────────────────────
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { 
@@ -37,9 +33,9 @@ const MUSCLE_COLORS = [
 function BackgroundDecor() {
   return (
     <div className="pointer-events-none fixed inset-0 overflow-hidden -z-10">
-      <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full opacity-[0.06]"
+      <div className="absolute -top-40 -right-40 w-125 h-125 rounded-full opacity-[0.06]"
         style={{ background: "radial-gradient(circle, #a3e635 0%, transparent 70%)" }} />
-      <div className="absolute -bottom-20 -left-20 w-[350px] h-[350px] rounded-full opacity-[0.06]"
+      <div className="absolute -bottom-20 -left-20 w-87.5 h-87.5 rounded-full opacity-[0.06]"
         style={{ background: "radial-gradient(circle, #a3e635 0%, transparent 70%)" }} />
     </div>
   );
@@ -136,7 +132,9 @@ export default function PerformancePage() {
               <TrendingUp className="w-4 h-4 text-zinc-900" />
             </div>
             <div>
+            <a href="/workout">
               <h1 className="text-3xl font-black text-white tracking-tight">Performance</h1>
+              </a>
               <p className="text-xs text-zinc-600">Track your workout progress</p>
             </div>
           </div>

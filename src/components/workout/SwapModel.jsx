@@ -18,11 +18,7 @@ import { Check }  from "lucide-react";
 import { getExercises } from "@/lib/api";
 import { MUSCLE_META, MUSCLE_LIST, DIFFICULTY_COLOR } from "@/constants/workout.constants";
 
-// Props:
-//   open      - whether the dialog is visible
-//   targetEx  - the exercise being replaced
-//   onClose   - called when user cancels
-//   onSwap    - called with (dayExerciseId, newExerciseId)
+
 export default function SwapModal({ open, targetEx, onClose, onSwap }) {
   const [exercises, setExercises]   = useState([]);
   const [loading, setLoading]       = useState(true);

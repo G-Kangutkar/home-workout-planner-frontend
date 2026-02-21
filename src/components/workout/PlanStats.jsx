@@ -1,17 +1,11 @@
-// src/components/workout/PlanStats.jsx
-// ─────────────────────────────────────────────────────────────────
-// Displays the plan name (with rename button), goal badge,
-// and 3 stat numbers: workout days, total exercises, rest days.
-// ─────────────────────────────────────────────────────────────────
+
 import { Badge }   from "@/components/ui/badge";
 import { Button }  from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Pencil }  from "lucide-react";
 import { GOAL_META } from "@/constants/workout.constants";
 
-// Props:
-//   plan         - the active plan object from the API
-//   onRenameClick - called when user clicks the pencil icon
+
 export default function PlanStats({ plan, onRenameClick }) {
   // Count workout days (days where is_rest_day = false)
   const workoutDays    = plan.days?.filter((d) => !d.is_rest_day) || [];
@@ -25,7 +19,7 @@ export default function PlanStats({ plan, onRenameClick }) {
     <Card className="border-zinc-800 bg-zinc-900/70 backdrop-blur-sm mb-6">
       <CardContent className="p-5 flex flex-wrap items-center justify-between gap-4">
 
-        {/* Left: Plan name + goal badge */}
+        {/*  Plan name + goal badge */}
         <div>
           <div className="flex items-center gap-2 mb-1">
             <h2 className="text-xl font-black text-white">{plan.name}</h2>
@@ -47,7 +41,7 @@ export default function PlanStats({ plan, onRenameClick }) {
           </Badge>
         </div>
 
-        {/* Right: 3 stat numbers */}
+        {/*  3 stat numbers */}
         <div className="flex gap-6">
           {[
             { label: "Workout Days",    value: workoutDays.length },
