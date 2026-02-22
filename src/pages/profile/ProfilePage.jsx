@@ -124,7 +124,7 @@ function ProfilePage() {
               <path d="M3 9.5h4v5H3zM17 9.5h4v5h-4z" />
             </svg>
           </div>
-          <span className="text-white font-black text-xl tracking-tight">FITFORGE</span>
+          <span className="text-white font-black text-xl tracking-tight">FITNESS PROFILE</span>
         </div>
 
         {/* ── Main Card — your Card structure kept ── */}

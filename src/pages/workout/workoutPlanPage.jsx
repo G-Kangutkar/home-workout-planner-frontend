@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useCallback } from "react";
-import { toast } from "sonner"; 
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Dumbbell } from "lucide-react";
 
@@ -23,6 +23,7 @@ import {
 } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import CompleteWorkoutButton from "@/components/workout/CompleteWorkoutButton";
+import SetReminderModal from "@/components/remainder/Remainder";
 
 //  Background glow decoration 
 function BackgroundDecor() {
@@ -57,6 +58,7 @@ export default function WorkoutPlanPage() {
   const [swapTarget, setSwapTarget] = useState(null);
   const [showRename, setShowRename] = useState(false);
   const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
 
   // Today's day name e.g. "tuesday" ==2 and 0== sunday hence 6 because in our array it is 7th day
   const todayName = DAYS_ORDER[
@@ -108,9 +110,9 @@ export default function WorkoutPlanPage() {
       await renamePlan(plan.id, newName);
       setPlan((prev) => ({ ...prev, name: newName }));
       setShowRename(false);
-      toast.success("Plan renamed!"); 
+      toast.success("Plan renamed!");
     } catch (err) {
-      toast.error(err.message); 
+      toast.error(err.message);
     }
   };
 
@@ -128,7 +130,7 @@ export default function WorkoutPlanPage() {
         })),
       }));
       setSwapTarget(null);
-      toast.success("Exercise swapped!"); 
+      toast.success("Exercise swapped!");
     } catch (err) {
       toast.error(err.message);
     }
@@ -146,16 +148,15 @@ export default function WorkoutPlanPage() {
           exercises: day.exercises.filter((ex) => ex.id !== dayExerciseId),
         })),
       }));
-      toast.success("Exercise removed."); 
+      toast.success("Exercise removed.");
     } catch (err) {
-      toast.error(err.message); 
+      toast.error(err.message);
     }
   };
 
   // Current active day data
   const activeDayData = plan?.days?.find((d) => d.day === activeDay);
 
- 
   return (
     <div><Navbar />
       <div className="min-h-screen" style={{ background: "#0a0a0a" }}>
@@ -232,6 +233,16 @@ export default function WorkoutPlanPage() {
                     {" · "}{activeDayData?.exercises?.length} exercises
                   </p>
                 )}
+              </div>
+              <div className="flex justify-center mt-20">
+                <button
+                  onClick={() => setOpen(true)}
+                  className="px-6 py-3 bg-lime-500 text-white rounded-xl hover:bg-lime-700 transition"
+                >
+                  Set Workout Reminder
+                </button>
+
+                {open && <SetReminderModal open={open}  onClose={() => setOpen(false)} />}
               </div>
               {!activeDayData?.is_rest_day && activeDayData?.exercises?.length > 0 && (
                 <div className="flex justify-end mb-4">

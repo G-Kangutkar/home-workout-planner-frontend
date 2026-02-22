@@ -1,9 +1,4 @@
-// src/components/workout/SwapModal.jsx
-// ─────────────────────────────────────────────────────────────────
-// A shadcn Dialog for swapping an exercise.
-// Shows searchable, filterable exercise library.
-// User selects a replacement then confirms.
-// ─────────────────────────────────────────────────────────────────
+
 import { useState, useEffect } from "react";
 import {
   Dialog,
@@ -123,7 +118,7 @@ export default function SwapModal({ open, targetEx, onClose, onSwap }) {
             <p className="text-center text-zinc-600 py-8">No exercises found</p>
           ) : (
             filtered.map((ex) => {
-              const meta       = MUSCLE_META[ex.muscle_group] || MUSCLE_META.full_body;
+              const meta = MUSCLE_META[ex.muscle_group] || MUSCLE_META.full_body;
               const isSelected = selected?.id === ex.id;
 
               return (

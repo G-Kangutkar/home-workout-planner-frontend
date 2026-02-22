@@ -17,26 +17,27 @@ function Navbar() {
                 <div className=" flex items-center justify-between h-14 sm:h-16 gap-2 sm:gap-4">
                    
                     <div className="shrink-0  min-w-0">
-                        <a href="#home" className="text-green-700 font-heading text-base sm:text-xl md:text-2xl lg:text-3xl font-bold truncate block">
+                        <a href="#home" className="text-lime-700 font-heading text-base sm:text-xl md:text-2xl lg:text-3xl font-bold truncate block">
                             <span className="hidden md:inline">Home Workout Planner</span>
                             <span className="md:hidden">Workout</span>
                         </a>
                     </div>
 
-                    <div>
-                        <a href="/performance">Performance</a>
-                    </div>
+                    <div className="flex items-center gap-4 shrink-0">
+                        <a href="/performance" className=" text-lime-500  text-base sm:text-lg md:text-xl lg:text-2xl font-bold truncate block">Performance</a>
+                    
 
                     <button
                         type="submit"
                         onClick={handleLogout}
-                        className="bg-lime-400 px-3 py-2 sm:px-4 sm:py-2 text-xs sm:text-sm md:text-base rounded-lg sm:rounded-xl text-white hover:bg-lime-700 transition-colors whitespace-nowrap shrink-0"
+                        className="bg-lime-400 px-3 py-2 sm:px-4 sm:py-2 text-xs sm:text-sm md:text-base rounded-lg sm:rounded-xl text-white hover:bg-lime-700 transition-colors whitespace-nowrap "
                     >
                         <span className="hidden sm:inline">Log out</span>
                         <span className="sm:hidden">Logout</span>
                     </button>
                 </div>
             </div>
+        </div>
         </nav>
     )
 }

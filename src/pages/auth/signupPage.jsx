@@ -20,6 +20,7 @@ function Signup() {
         email: '',
         password: ""
     });
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const handleInputs = (e) => {
         const { name, value } = e.target;
@@ -31,12 +32,16 @@ function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true);
             const response = await axios.post('http://localhost:8080/register/signup', inputData);
             console.log('Signup successful!', response.data);
             toast.success('Account created successfully!')
             navigate('/login')
         } catch (error) {
             console.log('error at handling form submission', error.message)
+        }
+        finally{
+            setLoading(false);
         }
     }
 
@@ -95,8 +100,11 @@ function Signup() {
                     </form>
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
-                    <Button type="submit" onClick={handleSubmit} className="w-full">
-                        Signup
+                    <Button type="submit" onClick={handleSubmit} disabled={loading} className="w-full">
+                        {loading && (
+                            <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                        )}
+                        {loading ? "Signing in..." : "SignIn"}
                     </Button>
                 </CardFooter>
             </Card>
