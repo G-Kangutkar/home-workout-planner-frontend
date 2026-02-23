@@ -77,6 +77,7 @@ export default function NutritionPage() {
   );
   
   const { plan, meals, prepTips } = data;
+  console.log(plan)
   const meta = getMeta(plan.goal);
 //   console.log('plan',plan)
 
@@ -86,7 +87,15 @@ export default function NutritionPage() {
   const totalFat      = meals.reduce((s, m) => s + m.fat,      0);
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white pb-24">
+    <div className="min-h-screen px-4 text-white pb-24 relative" style={{ background: "#111318" }}>
+
+      {/* Background blobs */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden -z-10">
+        <div className="absolute -top-32 -right-32 w-100 h-100 rounded-full opacity-[0.06]"
+          style={{ background: "radial-gradient(circle, #a3e635 0%, transparent 70%)" }} />
+        <div className="absolute -bottom-20 -left-20 w-75 h-75 rounded-full opacity-[0.05]"
+          style={{ background: "radial-gradient(circle, #06b6d4 0%, transparent 70%)" }} />
+      </div>
 
       <RecipeModal
         meal={activeRecipe}
@@ -96,32 +105,55 @@ export default function NutritionPage() {
       />
 
       {/* Header */}
-      <div className="px-4 pt-8 pb-4">
-        <a href="/workout">
-            <h1 className="text-2xl font-black text-white" >Nutrition Plan</h1>
-        </a>
-        
-        <p className="text-sm text-zinc-500 mt-0.5">Personalized for your fitness goal</p>
+      <div className="px-4 sm:px-6 pt-4 pb-4">
+        {/* Back arrow + title */}
+        <div className="flex items-center gap-3 mb-1">
+          <a
+            href="/workout"
+            className="w-8 h-8 flex items-center justify-center rounded-xl border border-white/10 bg-white/4 text-zinc-400 hover:text-lime-400 hover:border-lime-400/30 hover:bg-lime-400/6 transition-all duration-200 shrink-0"
+          >
+            <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+          </a>
+          <a href="/workout" className="group">
+            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight group-hover:text-lime-400 transition-colors duration-200">
+              Nutrition Plan
+            </h1>
+          </a>
+        </div>
+        <p className="text-xs sm:text-sm text-zinc-500 mt-0.5 ml-11 font-medium tracking-wide uppercase">Personalized for your fitness goal</p>
+
+        {/* Lime accent bar */}
+        <div className="h-0.5 w-full bg-linear-to-r from-lime-400 via-lime-300 to-cyan-400 rounded-full mt-4" />
       </div>
 
       {/* Goal Banner */}
-      <div className="px-4 mb-5">
-        <div className={`flex items-center gap-3 p-4 rounded-2xl border ${meta.badge}`}>
-          <span className="text-2xl">{plan.icon}</span>
-          <div>
-            <p className={`font-black text-sm ${meta.color}`}>{plan.label}</p>
-            <p className="text-xs text-zinc-500">{plan.description}</p>
+      <div className="px-4 sm:px-6 mb-5">
+        <div className={`flex items-center gap-3 p-4 rounded-2xl border shadow-[0_4px_24px_rgba(0,0,0,0.3)] ${meta.badge}`}
+          style={{ background: "rgba(255,255,255,0.03)" }}>
+          <span className="text-2xl shrink-0">{plan[0].icon}</span>
+          <div className="min-w-0">
+            <p className={`font-black text-sm ${meta.color}`}>{plan[0].label}</p>
+            <p className="text-xs text-zinc-500 truncate">{plan[0].description}</p>
           </div>
         </div>
       </div>
 
-      {/* Daily Summary */}
-      <div className="px-4 mb-6">
-        <div className={`rounded-2xl p-5 border ${meta.badge}`}>
+      {/* ── Main two-column layout: Daily Summary + Today's Meals ── */}
+      <div className="px-4 sm:px-6 mb-6 flex flex-col lg:flex-row gap-5 items-start">
+
+        {/* Daily Summary */}
+        <div className={`w-full lg:w-95 shrink-0 self-stretch rounded-2xl p-5 border shadow-[0_4px_32px_rgba(0,0,0,0.4)] ${meta.badge}`}
+          style={{ background: "rgba(24,24,28,0.95)" }}>
+
+          {/* Top accent bar */}
+          <div className="h-0.5 w-full bg-linear-to-r from-lime-400 to-cyan-400 rounded-full mb-4 -mt-1" />
+
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-xs text-zinc-500 font-semibold uppercase tracking-wide">Daily Calories</p>
-              <div className="flex items-end gap-1.5 mt-0.5">
+              <p className="text-[10px] text-zinc-500 font-semibold uppercase tracking-widest">Daily Calories</p>
+              <div className="flex items-end gap-1.5 mt-1">
                 <Flame className={`w-5 h-5 mb-0.5 ${meta.color}`} />
                 <span className={`text-3xl font-black ${meta.color}`}>{totalCalories}</span>
                 <span className="text-sm text-zinc-500 mb-1">kcal</span>
@@ -130,45 +162,51 @@ export default function NutritionPage() {
             <div className="grid grid-cols-3 gap-2 text-center">
               {[
                 { label: "Protein", value: `${totalProtein}g`, color: "text-lime-400"   },
-                { label: "Carbs",   value: `${totalCarbs}g`,   color: "text-blue-400"   },
+                { label: "Carbs",   value: `${totalCarbs}g`,   color: "text-cyan-400"   },
                 { label: "Fat",     value: `${totalFat}g`,     color: "text-yellow-400" },
               ].map((m) => (
-                <div key={m.label} className="bg-zinc-900/50 rounded-xl px-2 py-1.5">
+                <div key={m.label} className="bg-zinc-900/80 border border-white/6 rounded-xl px-2 py-2">
                   <p className={`text-sm font-black ${m.color}`}>{m.value}</p>
                   <p className="text-[10px] text-zinc-500">{m.label}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="flex flex-col gap-3 pt-4 border-t border-white/10">
+
+          <div className="flex flex-col gap-3 pt-4 border-t border-white/[0.07]">
             <MacroBar label="Protein" value={plan.protein_pct} color="text-lime-400"   icon={Beef}     />
-            <MacroBar label="Carbs"   value={plan.carbs_pct}   color="text-blue-400"   icon={Wheat}    />
+            <MacroBar label="Carbs"   value={plan.carbs_pct}   color="text-cyan-400"   icon={Wheat}    />
             <MacroBar label="Fat"     value={plan.fat_pct}     color="text-yellow-400" icon={Droplets} />
+          </div>
+        </div>
+
+        {/* Today's Meals */}
+        <div className="w-full min-w-0">
+          <p className="text-[10px] text-zinc-500 font-semibold uppercase tracking-widest mb-3">Today's Meals</p>
+          <div className="flex flex-col gap-3">
+            {meals.map((meal) => (
+              <MealCard key={meal.id} meal={meal} meta={meta} onViewRecipe={setActiveRecipe} />
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Meals */}
-      <div className="px-4 mb-6">
-        <p className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-3">Today's Meals</p>
-        <div className="flex flex-col gap-3">
-          {meals.map((meal) => (
-            <MealCard key={meal.id} meal={meal} meta={meta} onViewRecipe={setActiveRecipe} />
-          ))}
-        </div>
-      </div>
-
-      {/* Prep Tips */}
+      {/* Prep Tips — full width below */}
       {prepTips.length > 0 && (
-        <div className="px-4">
-          <p className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-3">Meal Prep Tips</p>
-          <div className="border border-zinc-800 rounded-2xl p-4 flex flex-col gap-3">
+        <div className="px-4 sm:px-6">
+          <p className="text-[10px] text-zinc-500 font-semibold uppercase tracking-widest mb-3">Meal Prep Tips</p>
+          <div
+            className="rounded-2xl p-4 sm:p-5 flex flex-col gap-3 border border-white/6 shadow-[0_4px_24px_rgba(0,0,0,0.3)]"
+            style={{ background: "rgba(24,24,28,0.95)" }}
+          >
+            {/* Tips top accent */}
+            <div className="h-0.5 w-full bg-linear-to-r from-cyan-400 via-lime-300 to-lime-400 rounded-full -mt-1 mb-1" />
             {prepTips.map((tip, i) => (
               <div key={i} className="flex items-start gap-3">
-                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${meta.badge}`}>
+                <div className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 border ${meta.badge} shadow-[0_0_10px_rgba(163,230,53,0.1)]`}>
                   <Lightbulb className={`w-3.5 h-3.5 ${meta.color}`} />
                 </div>
-                <p className="text-sm text-zinc-400 leading-relaxed pt-0.5">{tip}</p>
+                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed pt-0.5">{tip}</p>
               </div>
             ))}
           </div>

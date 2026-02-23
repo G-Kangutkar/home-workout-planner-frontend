@@ -3,44 +3,49 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Eye, EyeOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 
 function Login() {
-    const [inputData, setInputData] = useState({
-        name: '',
-        email: '',
-        password: ""
-    });
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-    const handleInputs = (e) => {
-        const { name, value } = e.target;
+  const [inputData, setInputData] = useState({
+    name: '',
+    email: '',
+    password: ""
+  });
+  const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false)
+  const navigate = useNavigate();
+  const handleInputs = (e) => {
+    const { name, value } = e.target;
 
-        setInputData(prev => ({
-            ...prev, [name]: value
-        }))
+    setInputData(prev => ({
+      ...prev, [name]: value
+    }))
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const response = await axios.post('http://localhost:8080/register/login', inputData);
+      console.log('Signup successful!', response.data);
+      toast.success("Account created successfully!")
+      const token = response?.data?.accessToken;
+      // console.log('Extracted token:', token);
+      localStorage.setItem('token', token);
+      navigate('/profile')
+    } catch (error) {
+      console.log('error at handling form submission', error.message)
     }
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            setLoading(true);
-            const response = await axios.post('http://localhost:8080/register/login', inputData);
-            console.log('Signup successful!', response.data);
-            toast.success("Account created successfully!")
-            const token = response?.data?.accessToken;
-            // console.log('Extracted token:', token);
-            localStorage.setItem('token', token);
-            navigate('/profile')
-        } catch (error) {
-            console.log('error at handling form submission', error.message)
-        }
-        finally {
-            setLoading(false)
-        }
+    finally {
+      setLoading(false)
     }
+  }
 
 
-    return (
-    
+  return (
+
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#070a04]">
 
       {/* ── Gradient mesh blobs ── */}
@@ -54,23 +59,23 @@ function Login() {
         {/* Logo mark */}
         <div className="flex items-center mb-8 gap-8">
 
-        <div className="w-11 h-11 rounded-xl bg-linear-to-br from-lime-400 to-green-600 flex items-center justify-center shadow-[0_4px_20px_rgba(163,230,53,0.45)]">
-          <svg width="20" height="20" fill="none" stroke="black" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-            <path d="M12 2L2 7l10 5 10-5-10-5z" />
-            <path d="M2 17l10 5 10-5" />
-            <path d="M2 12l10 5 10-5" />
-          </svg>
-        </div>
+          <div className="w-11 h-11 rounded-xl bg-linear-to-br from-lime-400 to-green-600 flex items-center justify-center shadow-[0_4px_20px_rgba(163,230,53,0.45)]">
+            <svg width="20" height="20" fill="none" stroke="black" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5z" />
+              <path d="M2 17l10 5 10-5" />
+              <path d="M2 12l10 5 10-5" />
+            </svg>
+          </div>
 
-        {/* Header */}
-        
+          {/* Header */}
+
           <h1 className="text-2xl font-bold text-white tracking-tight mb-2">
             Welcome back
           </h1>
-          </div>
-          <div className="mb-8">
+        </div>
+        <div className="mb-8">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/signup")}
             className="mt-3 text-xs text-lime-400 hover:text-lime-300 transition-colors duration-200 font-medium cursor-pointer bg-transparent border-none"
           >
             Don't have an account? Sign up →
@@ -101,23 +106,35 @@ function Login() {
           </div>
 
           {/* Password */}
-          <div className="flex flex-col gap-2">
-            <label
-              htmlFor="password"
-              className="text-[11px] font-semibold uppercase tracking-widest text-lime-400/60"
-            >
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={inputData.password}
-              onChange={handleInputs}
-              placeholder="••••••••"
-              required
-              className="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-white/20 bg-white/6 border border-white/10 outline-none transition-all duration-200 focus:border-lime-400/70 focus:bg-white/10 focus:shadow-[0_0_0_3px_rgba(163,230,53,0.2),0_0_20px_rgba(163,230,53,0.08)]"
-            />
+          <div className="grid gap-2">
+            <div className="flex items-center">
+              <Label
+                htmlFor="password"
+                className="text-[11px] font-semibold uppercase tracking-widest text-lime-400/60"
+              >
+                Password
+              </Label>
+            </div>
+            <div className="relative">
+              <Input
+                id="password"
+                name='password'
+                type={show ? "text" : "password"}
+                onChange={handleInputs}
+                value={inputData.password}
+                required
+                className="bg-white/6 border border-white/10 text-white placeholder-white/20 rounded-xl px-4 py-3 text-sm outline-none transition-all duration-200 focus:border-lime-400/70 focus:bg-white/10 focus:shadow-[0_0_0_3px_rgba(163,230,53,0.2),0_0_20px_rgba(163,230,53,0.08)] focus-visible:ring-0 focus-visible:ring-offset-0"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() => setShow(!show)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-white/70 hover:bg-lime-300"
+              >
+                {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </Button>
+            </div>
           </div>
 
           {/* Divider */}
@@ -149,7 +166,7 @@ function Login() {
         </p>
       </div>
     </section>
-  
-    )
+
+  )
 }
 export default Login;

@@ -14,6 +14,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Eye, EyeOff } from "lucide-react"
+
 function Signup() {
     const [inputData, setInputData] = useState({
         name: '',
@@ -21,6 +23,8 @@ function Signup() {
         password: ""
     });
     const [loading, setLoading] = useState(false);
+    const [show, setShow] = useState(false)
+
     const navigate = useNavigate();
     const handleInputs = (e) => {
         const { name, value } = e.target;
@@ -36,7 +40,7 @@ function Signup() {
             const response = await axios.post('http://localhost:8080/register/signup', inputData);
             console.log('Signup successful!', response.data);
             toast.success('Account created successfully!')
-            navigate('/login')
+            navigate('/')
         } catch (error) {
             console.log('error at handling form submission', error.message)
         }
@@ -46,7 +50,7 @@ function Signup() {
     }
 
     return (
-        
+
         <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#070a04]">
 
             {/* Gradient blobs */}
@@ -63,7 +67,7 @@ function Signup() {
                     <CardDescription className="text-white/40 font-light text-center">
 
                         <button
-                            onClick={() => navigate("/login")}
+                            onClick={() => navigate("/")}
                             className="mt-3  text-xs text-lime-400 hover:text-lime-300 transition-colors duration-200 font-medium cursor-pointer bg-transparent border-none"
                         >
                             Already have an account? Login →
@@ -134,15 +138,26 @@ function Signup() {
                                         Password
                                     </Label>
                                 </div>
+                                <div className="relative">
                                 <Input
                                     id="password"
                                     name='password'
-                                    type="password"
+                                    type={show ? "text" : "password"}
                                     onChange={handleInputs}
                                     value={inputData.password}
                                     required
                                     className="bg-white/6 border border-white/10 text-white placeholder-white/20 rounded-xl px-4 py-3 text-sm outline-none transition-all duration-200 focus:border-lime-400/70 focus:bg-white/10 focus:shadow-[0_0_0_3px_rgba(163,230,53,0.2),0_0_20px_rgba(163,230,53,0.08)] focus-visible:ring-0 focus-visible:ring-offset-0"
                                 />
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => setShow(!show)}
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 text-white/70 hover:bg-lime-300"
+                                >
+                                    {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                </Button>
+                            </div>
                             </div>
 
                         </div>

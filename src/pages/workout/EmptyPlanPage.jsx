@@ -7,13 +7,68 @@ import {  useNavigate } from "react-router-dom";
 export default function EmptyPlanPage({ onGenerate, loading }) {
   const navigate = useNavigate()
   return (
+    // <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center px-4">
+
+    //   {/* Big emoji icon */}
+    //   <div
+    //     className="w-24 h-24 rounded-3xl flex items-center justify-center text-5xl"
+    //     style={{
+    //       background: "rgba(163,230,53,0.1)",
+    //       border: "1px solid rgba(163,230,53,0.2)",
+    //     }}
+    //   >
+    //     🏋️
+    //   </div>
+
+    //   {/* Title and subtitle */}
+    //   <div>
+    //     <h2 className="text-3xl font-black text-white">No Plan Yet</h2>
+    //     <p className="text-zinc-500 mt-2 max-w-sm text-sm leading-relaxed">
+    //       We'll generate a personalized 3-day workout plan based on your fitness profile and goals.
+    //     </p>
+    //   </div>
+
+    //   {/* Generate button */}
+    //   <Button
+    //     onClick={onGenerate}
+    //     disabled={loading}
+    //     className="px-8 py-6 text-base rounded-2xl bg-lime-400 hover:bg-lime-300 text-zinc-900 font-black
+    //       shadow-[0_0_30px_rgba(163,230,53,0.4)] hover:shadow-[0_0_40px_rgba(163,230,53,0.6)] transition-all"
+    //   >
+    //     {loading ? (
+    //       <>
+    //         <svg className="animate-spin w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none">
+    //           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+    //           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+    //         </svg>
+    //         Generating…
+    //       </>
+    //     ) : (
+    //       <>
+    //         <Zap className="w-5 h-5 mr-2" />
+    //         Generate My Plan
+    //       </>
+    //     )}
+    //   </Button>
+
+    //   {/* Note about profile */}
+    //   <p className="text-xs text-zinc-700">
+    //     Make sure your fitness profile is set up first.
+    //   </p>
+    //   <Button
+    //       type="button"
+    //       onClick={() => navigate("/profile")}
+    //       className="text-lime-400 hover:text-lime-300 font-semibold transition-colors" >
+    //     Go to Profile Page →
+    //   </Button>
+    // </div>
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center px-4">
 
       {/* Big emoji icon */}
       <div
-        className="w-24 h-24 rounded-3xl flex items-center justify-center text-5xl"
+        className="w-24 h-24 rounded-3xl flex items-center justify-center text-5xl shadow-[0_0_40px_rgba(163,230,53,0.12),0_0_0_1px_rgba(163,230,53,0.15)] relative overflow-hidden"
         style={{
-          background: "rgba(163,230,53,0.1)",
+          background: "rgba(163,230,53,0.07)",
           border: "1px solid rgba(163,230,53,0.2)",
         }}
       >
@@ -22,7 +77,8 @@ export default function EmptyPlanPage({ onGenerate, loading }) {
 
       {/* Title and subtitle */}
       <div>
-        <h2 className="text-3xl font-black text-white">No Plan Yet</h2>
+        <h2 className="text-3xl font-black text-white tracking-tight">No Plan Yet</h2>
+        <div className="h-0.5 w-12 rounded-full bg-linear-to-r from-lime-400 to-cyan-400 mx-auto mt-3 mb-3" />
         <p className="text-zinc-500 mt-2 max-w-sm text-sm leading-relaxed">
           We'll generate a personalized 3-day workout plan based on your fitness profile and goals.
         </p>
@@ -32,8 +88,7 @@ export default function EmptyPlanPage({ onGenerate, loading }) {
       <Button
         onClick={onGenerate}
         disabled={loading}
-        className="px-8 py-6 text-base rounded-2xl bg-lime-400 hover:bg-lime-300 text-zinc-900 font-black
-          shadow-[0_0_30px_rgba(163,230,53,0.4)] hover:shadow-[0_0_40px_rgba(163,230,53,0.6)] transition-all"
+        className="px-8 py-6 text-base rounded-2xl bg-lime-400 hover:bg-lime-300 text-zinc-900 font-black shadow-[0_0_30px_rgba(163,230,53,0.4)] hover:shadow-[0_0_40px_rgba(163,230,53,0.6)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 border-none"
       >
         {loading ? (
           <>
@@ -52,13 +107,13 @@ export default function EmptyPlanPage({ onGenerate, loading }) {
       </Button>
 
       {/* Note about profile */}
-      <p className="text-xs text-zinc-700">
+      <p className="text-xs text-zinc-600 tracking-wide uppercase font-semibold">
         Make sure your fitness profile is set up first.
       </p>
       <Button
           type="button"
           onClick={() => navigate("/profile")}
-          className="text-lime-400 hover:text-lime-300 font-semibold transition-colors" >
+          className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors bg-transparent border-none shadow-none hover:bg-transparent hover:shadow-none underline-offset-4 hover:underline" >
         Go to Profile Page →
       </Button>
     </div>

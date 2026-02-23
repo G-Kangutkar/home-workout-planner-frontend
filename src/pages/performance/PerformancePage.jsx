@@ -107,7 +107,7 @@ export default function PerformancePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "#0a0a0a" }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#111318" }}>
         <div className="flex flex-col items-center gap-3">
           <svg className="animate-spin w-8 h-8 text-lime-400" viewBox="0 0 24 24" fill="none">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -120,36 +120,43 @@ export default function PerformancePage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#0a0a0a" }}>
+    <div className="min-h-screen w-full overflow-x-hidden" style={{ background: "#111318" }}>
       <BackgroundDecor />
 
-      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      <div className="w-full max-w-7xl mx-auto px-4 pt-6 pb-10 sm:px-6 sm:pt-10 lg:px-8">
 
         {/* Header */}
-        <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
+        <div className="flex flex-col gap-3 mb-6 sm:flex-row sm:items-center sm:justify-between sm:mb-8">
+
+          {/* Back arrow + title */}
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "#a3e635" }}>
-              <TrendingUp className="w-4 h-4 text-zinc-900" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0 shadow-[0_0_18px_rgba(163,230,53,0.4)]"
+              style={{ background: "#a3e635" }}>
+              <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-zinc-900" />
             </div>
             <div>
-            <a href="/workout">
-              <h1 className="text-3xl font-black text-white tracking-tight">Performance</h1>
+              <a href="/workout" className="group flex items-center gap-2">
+                <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" className="text-zinc-500 group-hover:text-lime-400 transition-colors shrink-0">
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight group-hover:text-lime-400 transition-colors duration-200">Performance</h1>
               </a>
-              <p className="text-xs text-zinc-600">Track your workout progress</p>
+              <p className="text-[10px] sm:text-xs text-zinc-500 mt-0.5 font-medium tracking-wide uppercase">Track your workout progress</p>
             </div>
           </div>
 
           {/* Period selector */}
-          <div className="flex gap-2">
+          <div className="flex gap-1.5 sm:gap-2 w-full sm:w-auto">
             {["7days", "30days", "90days", "all"].map((p) => (
               <Button
                 key={p}
                 variant={period === p ? "default" : "outline"}
                 onClick={() => setPeriod(p)}
-                className={period === p
-                  ? "bg-lime-400 hover:bg-lime-300 text-zinc-900 font-bold"
-                  : "border-zinc-700 text-zinc-400 hover:border-zinc-500 bg-zinc-900"
-                }
+                className={`flex-1 sm:flex-none text-xs sm:text-sm px-2 sm:px-4 h-8 sm:h-9 rounded-xl font-bold transition-all duration-200 ${
+                  period === p
+                    ? "bg-lime-400 hover:bg-lime-300 text-zinc-900 shadow-[0_0_16px_rgba(163,230,53,0.35)]"
+                    : "border-zinc-700 text-zinc-400 hover:border-lime-400/40 hover:text-lime-400 bg-zinc-900 hover:bg-zinc-800"
+                }`}
               >
                 {p === "7days" ? "7D" : p === "30days" ? "30D" : p === "90days" ? "90D" : "All"}
               </Button>
@@ -157,8 +164,11 @@ export default function PerformancePage() {
           </div>
         </div>
 
+        {/* Lime accent bar */}
+        <div className="h-0.5 w-full bg-linear-to-r from-lime-400 via-lime-300 to-cyan-400 rounded-full mb-6 sm:mb-8" />
+
         {/* Summary stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
           <StatCard
             icon={Calendar}
             label="Total Workouts"
@@ -178,7 +188,7 @@ export default function PerformancePage() {
             label="Total Time"
             value={`${Math.floor((stats?.summary?.totalMinutes || 0) / 60)}h ${(stats?.summary?.totalMinutes || 0) % 60}m`}
             sublabel="Training duration"
-            color="blue"
+            color="cyan"
           />
           <StatCard
             icon={TrendingUp}
@@ -190,88 +200,97 @@ export default function PerformancePage() {
         </div>
 
         {/* Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
 
-          {/* Calories over time - Line chart */}
-          <Card className="border-zinc-800 bg-zinc-900/80 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-white text-lg font-black flex items-center gap-2">
-                <Flame className="w-4 h-4 text-orange-400" />
-                Calories Burned Over Time
+          {/* Calories over time */}
+          <Card className="border border-zinc-800 rounded-2xl overflow-hidden"
+            style={{ background: "rgba(24,24,28,0.95)" }}>
+            <div className="h-0.5 w-full bg-linear-to-r from-orange-400 to-yellow-400" />
+            <CardHeader className="pb-2 px-4 sm:px-6 pt-4">
+              <CardTitle className="text-white text-base sm:text-lg font-black flex items-center gap-2">
+                <Flame className="w-4 h-4 text-orange-400 shrink-0" />
+                <span className="truncate">Calories Burned Over Time</span>
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={250}>
+            <CardContent className="px-2 sm:px-4 pb-4">
+              <ResponsiveContainer width="100%" height={220}>
                 <LineChart data={stats?.charts?.daily || []}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-                  <XAxis 
-                    dataKey="date" 
-                    stroke="#71717a"
-                    tick={{ fill: "#71717a", fontSize: 12 }}
+                  <XAxis
+                    dataKey="date"
+                    stroke="#52525b"
+                    tick={{ fill: "#71717a", fontSize: 10 }}
                     tickFormatter={(val) => new Date(val).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                   />
-                  <YAxis 
-                    stroke="#71717a"
-                    tick={{ fill: "#71717a", fontSize: 12 }}
+                  <YAxis
+                    stroke="#52525b"
+                    tick={{ fill: "#71717a", fontSize: 10 }}
+                    width={36}
                   />
                   <Tooltip content={<CustomTooltip />} />
-                  <Line 
-                    type="monotone" 
-                    dataKey="calories" 
-                    stroke={COLORS.orange} 
+                  <Line
+                    type="monotone"
+                    dataKey="calories"
+                    stroke={COLORS.orange}
                     strokeWidth={3}
-                    dot={{ fill: COLORS.orange, r: 4 }}
-                    activeDot={{ r: 6 }}
+                    dot={{ fill: COLORS.orange, r: 3 }}
+                    activeDot={{ r: 5 }}
                   />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
 
-          {/* Weekly workouts - Bar chart */}
-          <Card className="border-zinc-800 bg-zinc-900/80 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-white text-lg font-black flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-lime-400" />
-                Weekly Workout Count
+          {/* Weekly workouts */}
+          <Card className="border border-zinc-800 rounded-2xl overflow-hidden"
+            style={{ background: "rgba(24,24,28,0.95)" }}>
+            <div className="h-0.5 w-full bg-linear-to-r from-lime-400 to-lime-300" />
+            <CardHeader className="pb-2 px-4 sm:px-6 pt-4">
+              <CardTitle className="text-white text-base sm:text-lg font-black flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-lime-400 shrink-0" />
+                <span className="truncate">Weekly Workout Count</span>
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={250}>
+            <CardContent className="px-2 sm:px-4 pb-4">
+              <ResponsiveContainer width="100%" height={220}>
                 <BarChart data={stats?.charts?.weekly || []}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-                  <XAxis 
-                    dataKey="week" 
-                    stroke="#71717a"
-                    tick={{ fill: "#71717a", fontSize: 12 }}
+                  <XAxis
+                    dataKey="week"
+                    stroke="#52525b"
+                    tick={{ fill: "#71717a", fontSize: 10 }}
                     tickFormatter={(val) => new Date(val).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                   />
-                  <YAxis 
-                    stroke="#71717a"
-                    tick={{ fill: "#71717a", fontSize: 12 }}
+                  <YAxis
+                    stroke="#52525b"
+                    tick={{ fill: "#71717a", fontSize: 10 }}
+                    width={36}
                   />
                   <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="workouts" fill={COLORS.lime} radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="workouts" fill={COLORS.lime} radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
 
-          {/* Muscle groups - Pie chart */}
-          <Card className="border-zinc-800 bg-zinc-900/80 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-white text-lg font-black flex items-center gap-2">
-                💪 Most Trained Muscle Groups
+          {/* Muscle groups */}
+          <Card className="border border-zinc-800 rounded-2xl overflow-hidden"
+            style={{ background: "rgba(24,24,28,0.95)" }}>
+            <div className="h-0.5 w-full bg-linear-to-r from-cyan-400 to-lime-400" />
+            <CardHeader className="pb-2 px-4 sm:px-6 pt-4">
+              <CardTitle className="text-white text-base sm:text-lg font-black flex items-center gap-2">
+                <span>💪</span>
+                <span className="truncate">Most Trained Muscle Groups</span>
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={250}>
+            <CardContent className="px-2 sm:px-4 pb-4">
+              <ResponsiveContainer width="100%" height={220}>
                 <PieChart>
                   <Pie
                     data={stats?.charts?.muscleGroups || []}
                     cx="50%"
                     cy="50%"
-                    outerRadius={80}
+                    outerRadius={75}
                     fill="#a3e635"
                     dataKey="count"
                     label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
@@ -287,37 +306,40 @@ export default function PerformancePage() {
             </CardContent>
           </Card>
 
-          {/* Duration over time - Line chart */}
-          <Card className="border-zinc-800 bg-zinc-900/80 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-white text-lg font-black flex items-center gap-2">
-                <Clock className="w-4 h-4 text-blue-400" />
-                Workout Duration Over Time
+          {/* Duration over time */}
+          <Card className="border border-zinc-800 rounded-2xl overflow-hidden"
+            style={{ background: "rgba(24,24,28,0.95)" }}>
+            <div className="h-0.5 w-full bg-linear-to-r from-cyan-400 to-cyan-300" />
+            <CardHeader className="pb-2 px-4 sm:px-6 pt-4">
+              <CardTitle className="text-white text-base sm:text-lg font-black flex items-center gap-2">
+                <Clock className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span className="truncate">Workout Duration Over Time</span>
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={250}>
+            <CardContent className="px-2 sm:px-4 pb-4">
+              <ResponsiveContainer width="100%" height={220}>
                 <LineChart data={stats?.charts?.daily || []}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-                  <XAxis 
-                    dataKey="date" 
-                    stroke="#71717a"
-                    tick={{ fill: "#71717a", fontSize: 12 }}
+                  <XAxis
+                    dataKey="date"
+                    stroke="#52525b"
+                    tick={{ fill: "#71717a", fontSize: 10 }}
                     tickFormatter={(val) => new Date(val).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                   />
-                  <YAxis 
-                    stroke="#71717a"
-                    tick={{ fill: "#71717a", fontSize: 12 }}
-                    label={{ value: 'Minutes', angle: -90, position: 'insideLeft', fill: '#71717a' }}
+                  <YAxis
+                    stroke="#52525b"
+                    tick={{ fill: "#71717a", fontSize: 10 }}
+                    width={36}
+                    label={{ value: 'Min', angle: -90, position: 'insideLeft', fill: '#52525b', fontSize: 10 }}
                   />
                   <Tooltip content={<CustomTooltip />} />
-                  <Line 
-                    type="monotone" 
-                    dataKey="duration" 
-                    stroke={COLORS.blue} 
+                  <Line
+                    type="monotone"
+                    dataKey="duration"
+                    stroke={COLORS.cyan}
                     strokeWidth={3}
-                    dot={{ fill: COLORS.blue, r: 4 }}
-                    activeDot={{ r: 6 }}
+                    dot={{ fill: COLORS.cyan, r: 3 }}
+                    activeDot={{ r: 5 }}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -328,14 +350,15 @@ export default function PerformancePage() {
 
         {/* No data state */}
         {stats?.summary?.totalWorkouts === 0 && (
-          <Card className="border-zinc-800 bg-zinc-900/80 backdrop-blur-sm">
-            <CardContent className="py-16 text-center">
-              <div className="w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-4"
-                style={{ background: "rgba(163,230,53,0.1)", border: "1px solid rgba(163,230,53,0.2)" }}>
-                <TrendingUp className="w-10 h-10 text-lime-400" />
+          <Card className="border border-zinc-800 rounded-2xl overflow-hidden"
+            style={{ background: "rgba(24,24,28,0.95)" }}>
+            <CardContent className="py-16 text-center px-4">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-[0_0_30px_rgba(163,230,53,0.15)]"
+                style={{ background: "rgba(163,230,53,0.08)", border: "1px solid rgba(163,230,53,0.2)" }}>
+                <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 text-lime-400" />
               </div>
-              <h3 className="text-xl font-black text-white mb-2">No Workouts Yet</h3>
-              <p className="text-zinc-500 text-sm max-w-md mx-auto">
+              <h3 className="text-lg sm:text-xl font-black text-white mb-2">No Workouts Yet</h3>
+              <p className="text-zinc-500 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
                 Complete your first workout to start tracking your performance. Your stats will appear here.
               </p>
             </CardContent>
