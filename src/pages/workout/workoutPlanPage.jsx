@@ -59,6 +59,7 @@ export default function WorkoutPlanPage() {
   const [showRename, setShowRename] = useState(false);
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
+  const [workoutDuration, setWorkoutDuration] = useState(15);
 
   // Today's day name e.g. "tuesday" ==2 and 0== sunday hence 6 because in our array it is 7th day
   const todayName = DAYS_ORDER[
@@ -71,6 +72,12 @@ export default function WorkoutPlanPage() {
     setError("");
     try {
       const data = await getActivePlan();
+      const duration =
+        data.plan?.workout_duration ||
+        data.profile?.workout_duration ||
+        data.workout_duration ||
+        15;
+      setWorkoutDuration(duration);
       setPlan(data.plan);
       const hasToday = data.plan.days.find((d) => d.day === todayName);
       const firstWorkout = data.plan.days.find((d) => !d.is_rest_day);
@@ -86,7 +93,9 @@ export default function WorkoutPlanPage() {
     }
   }, [todayName]);
 
-  useEffect(() => { fetchPlan(); }, [fetchPlan]);
+  useEffect(() => { fetchPlan(); 
+    
+  }, [fetchPlan]);
 
   //  Generate plan 
   const handleGenerate = async () => {
@@ -156,6 +165,7 @@ export default function WorkoutPlanPage() {
 
   // Current active day data
   const activeDayData = plan?.days?.find((d) => d.day === activeDay);
+
 
   return (
     <div><Navbar />
@@ -234,23 +244,34 @@ export default function WorkoutPlanPage() {
                   </p>
                 )}
               </div>
-              <div className="flex justify-center mt-20">
+              <div className="flex justify-center mb-1.5 gap-3 mt-10 px-4 sm:mt-20">
                 <button
                   onClick={() => setOpen(true)}
-                  className="px-6 py-3 bg-lime-500 text-white rounded-xl hover:bg-lime-700 transition"
+                  className="w-full sm:w-auto px-6 py-3 bg-lime-500 text-white rounded-xl hover:bg-lime-700 transition"
                 >
                   Set Workout Reminder
                 </button>
 
-                {open && <SetReminderModal open={open}  onClose={() => setOpen(false)} />}
+                <SetReminderModal open={open} onClose={() => setOpen(false)} />
+                {/* {open && <SetReminderModal open={open}  onClose={() => setOpen(false)} />} */}
               </div>
               {!activeDayData?.is_rest_day && activeDayData?.exercises?.length > 0 && (
-                <div className="flex justify-end mb-4">
-                  <CompleteWorkoutButton
-                    dayId={activeDayData.id}
-                    dayName={activeDay}
-                    exercises={activeDayData.exercises}
-                  />
+                <div className="flex justify-center sm:justify-end px-4 mb-4">
+                  <div className="w-full sm:w-auto gap-3">
+                {/* <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto"> */}
+                     {/* <StartIntervalWorkout */}
+                {/* //       exercises={activeDayData.exercises}
+                //       workoutDuration={workoutDuration}
+                //       workoutName={`${DAY_FULL[activeDay]} — ${activeDayData?.focus || "Workout"}`}
+                //       onComplete={() => toast.success("Interval workout complete! 💪")}
+                //     /> */}
+                    <CompleteWorkoutButton
+                      dayId={activeDayData.id}
+                      dayName={activeDay}
+                      exercises={activeDayData.exercises}
+                    />
+                  </div>
+                 {/* </div> */}
                 </div>
               )}
 

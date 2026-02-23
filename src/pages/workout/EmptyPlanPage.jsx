@@ -1,9 +1,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Zap }    from "lucide-react";
+import {  useNavigate } from "react-router-dom";
 
 
 export default function EmptyPlanPage({ onGenerate, loading }) {
+  const navigate = useNavigate()
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center px-4">
 
@@ -53,7 +55,12 @@ export default function EmptyPlanPage({ onGenerate, loading }) {
       <p className="text-xs text-zinc-700">
         Make sure your fitness profile is set up first.
       </p>
-
+      <Button
+          type="button"
+          onClick={() => navigate("/profile")}
+          className="text-lime-400 hover:text-lime-300 font-semibold transition-colors" >
+        Go to Profile Page →
+      </Button>
     </div>
   );
 }

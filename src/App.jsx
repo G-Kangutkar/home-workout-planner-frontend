@@ -6,6 +6,7 @@ import Login from "./pages/auth/loginPage";
 import Signup from "./pages/auth/signupPage";
 import ProfilePage from "./pages/profile/ProfilePage";
 import PerformancePage from "./pages/performance/PerformancePage";
+import NutritionPage from "./pages/nutrition/nutritionPlan";
 
 function App() {
   
@@ -30,6 +31,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage/>}/>
         <Route path="/workout" element={<WorkoutPlanPage />} />
         <Route path="/performance" element={<PerformancePage/>}/>
+        <Route path="/nutrition" element={<NutritionPage/>}/>
       </Routes>
     </BrowserRouter>
   )

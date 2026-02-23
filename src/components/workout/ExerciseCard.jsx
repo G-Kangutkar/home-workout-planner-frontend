@@ -5,16 +5,28 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronDown, RefreshCw, Trash2 } from "lucide-react";
 import { MUSCLE_META, DIFFICULTY_COLOR } from "@/constants/workout.constants";
+import IntervalTimer from "@/components/intervalTimer/IntervalTimer";  
+import { Timer } from "lucide-react";
 
+const INTERVAL_TAGS = ["hiit", "tabata", "cardio", "plyometric"];
+const isHiitExercise = (exercise) => {
+  const tags = exercise?.exercise?.tags || [];
+  return tags.some((t) => INTERVAL_TAGS.includes(t));
+};
 
 export default function ExerciseCard({ exercise, index, onSwap, onRemove }) {
   // Controls whether the instructions section is visible
   const [showDetails, setShowDetails] = useState(false);
-
+  const [showTimer, setShowTimer]     = useState(false);
   // Get color/icon config for this muscle group
   const meta = MUSCLE_META[exercise.exercise?.muscle_group] || MUSCLE_META.full_body;
 
+const DIFFICULTY_DURATION = { beginner: 20, intermediate: 30, advanced: 45 };
+const WORK_DURATION = DIFFICULTY_DURATION[exercise.exercise?.difficulty] || 15;
+const REST_DURATION = 25;
+
   return (
+    <>
     <Card
       className="group relative overflow-hidden border-zinc-800 bg-zinc-900/80 hover:border-zinc-600 transition-all duration-300"
       style={{
@@ -98,6 +110,17 @@ export default function ExerciseCard({ exercise, index, onSwap, onRemove }) {
             </p>
           </div>
         </div>
+         {isHiitExercise(exercise) && (
+            <button
+              onClick={() => setShowTimer(true)}
+              className="w-full flex items-center justify-center gap-2 mb-3 py-2 rounded-xl
+                         bg-lime-400/10 border border-lime-400/20 text-lime-400
+                         hover:bg-lime-400/20 transition-all text-xs font-bold"
+            >
+              <Timer className="w-3.5 h-3.5" /> start workout
+              {/* Start Interval Timer · {WORK_DURATION}s work / {REST_DURATION}s rest */}
+            </button>
+          )}
 
         {/*  Description + expand toggle*/}
         <button
@@ -150,5 +173,16 @@ export default function ExerciseCard({ exercise, index, onSwap, onRemove }) {
         )}
       </CardContent>
     </Card>
+    {showTimer && (
+        <IntervalTimer
+          exercises={[exercise]}
+          workoutName={exercise.exercise?.name}
+          workDuration={WORK_DURATION}
+          restDuration={REST_DURATION}
+          onClose={() => setShowTimer(false)}
+          onComplete={() => setShowTimer(false)}
+        />
+      )}
+      </>
   );
 }
