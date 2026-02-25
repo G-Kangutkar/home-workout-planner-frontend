@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "sonner"
 import './App.css'
-import WorkoutPlanPage from "@/pages/workout/WorkoutPlanPage.jsx";
+import WorkoutPlanPage from "./pages/workout/workoutPlanPage.jsx";
 import Login from "./pages/auth/loginPage.jsx";
 import Signup from "./pages/auth/signupPage.jsx";
 import ProfilePage from "./pages/profile/ProfilePage.jsx";
