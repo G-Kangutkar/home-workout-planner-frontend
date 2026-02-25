@@ -1,18 +1,18 @@
 
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button.jsx";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/components/ui/dialog.jsx";
+import { Input } from "@/components/ui/input.jsx";
+import { Label } from "@/components/ui/label.jsx";
 import { CheckCircle2, TrendingUp, Flame } from "lucide-react";
-import { logWorkout } from "@/lib/api";
+import { logWorkout } from "@/lib/api.js";
 import axios from "axios";
 
 export default function CompleteWorkoutButton({ dayId, dayName, exercises }) {

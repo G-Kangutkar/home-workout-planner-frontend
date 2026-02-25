@@ -6,10 +6,10 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/card.jsx"
+import { Label } from "@/components/ui/label.jsx"
+import { Input } from "@/components/ui/input.jsx"
+import { Button } from "@/components/ui/button.jsx"
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

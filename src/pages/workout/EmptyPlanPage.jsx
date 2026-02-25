@@ -1,5 +1,5 @@
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button.jsx";
 import { Zap }    from "lucide-react";
 import {  useNavigate } from "react-router-dom";
 

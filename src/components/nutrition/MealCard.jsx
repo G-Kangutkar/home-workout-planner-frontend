@@ -1,5 +1,5 @@
 import { ChevronDown,ChevronUp,Bean, Wheat, Droplets,} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge.jsx";
 import { useState } from "react";
 
 

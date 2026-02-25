@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge.jsx";
 import { X } from "lucide-react";
 
 export default function ExerciseDetailModal({ exercise, meta, onClose }) {

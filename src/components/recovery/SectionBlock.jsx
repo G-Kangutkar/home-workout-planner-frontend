@@ -1,4 +1,4 @@
-import TipCard from "./TipCard";
+import TipCard from "./TipCard.jsx";
 
 
 const SECTION_META = {

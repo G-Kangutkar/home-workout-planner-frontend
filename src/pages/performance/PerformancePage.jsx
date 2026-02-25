@@ -5,12 +5,12 @@ import {
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer 
 } from "recharts";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button.jsx";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.jsx";
 import { Calendar, TrendingUp, Flame, Clock } from "lucide-react";
 
 // API calls
-import { getPerformanceStats } from "@/lib/api";
+import { getPerformanceStats } from "@/lib/api.js";
 
 // Colors for charts
 const COLORS = {

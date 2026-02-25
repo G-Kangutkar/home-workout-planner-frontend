@@ -1,13 +1,13 @@
 
 import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge.jsx";
+import { Button } from "@/components/ui/button.jsx";
+import { Card, CardContent } from "@/components/ui/card.jsx";
 import { ChevronDown, RefreshCw, Trash2 } from "lucide-react";
 import { Timer } from "lucide-react";
-import { MUSCLE_META, DIFFICULTY_COLOR } from "@/constants/workout.constants";
-import IntervalTimer from "@/components/intervalTimer/IntervalTimer";
-import ExerciseDetailModal from "./Exercisedetailmodal";
+import { MUSCLE_META, DIFFICULTY_COLOR } from "@/constants/workout.constants.js";
+import IntervalTimer from "@/components/intervalTimer/IntervalTimer.jsx";
+import ExerciseDetailModal from "./Exercisedetailmodal.jsx";
 
 
 const INTERVAL_TAGS = ["hiit", "tabata", "cardio", "plyometric"];

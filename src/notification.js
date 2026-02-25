@@ -1,5 +1,5 @@
 import { getMessaging, getToken } from "firebase/messaging";
-import { messaging } from "./firebase/firebase";
+import { messaging } from "./firebase/firebase.js";
 //  import {app} from './firebase/firebase';
 
 // const messaging = getMessaging(app)

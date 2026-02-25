@@ -1,19 +1,19 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button.jsx";
 import { RefreshCw, Dumbbell } from "lucide-react";
 
 // Child components
-import DayTabs from "@/components/workout/DayTabs";
-import ExerciseCard from "@/components/workout/ExerciseCard";
-import RestDayCard from "@/components/workout/RestDayCard";
-import PlanStats from "@/components/workout/PlanStats";
-import SwapModal from "@/components/workout/SwapModel";
-import RenameModal from "@/components/workout/RenameModal";
-import EmptyPlanPage from "@/pages/workout/EmptyPlanPage";
+import DayTabs from "@/components/workout/DayTabs.jsx";
+import ExerciseCard from "@/components/workout/ExerciseCard.jsx";
+import RestDayCard from "@/components/workout/RestDayCard.jsx";
+import PlanStats from "@/components/workout/PlanStats.jsx";
+import SwapModal from "@/components/workout/SwapModel.jsx";
+import RenameModal from "@/components/workout/RenameModal.jsx";
+import EmptyPlanPage from "@/pages/workout/EmptyPlanPage.jsx";
 
-import { DAYS_ORDER, DAY_FULL } from "@/constants/workout.constants";
+import { DAYS_ORDER, DAY_FULL } from "@/constants/workout.constants.js";
 import {
   getActivePlan,
   generatePlan,

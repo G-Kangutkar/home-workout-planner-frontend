@@ -4,9 +4,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button.jsx";
+import { Label } from "@/components/ui/label.jsx"
+import { Input } from "@/components/ui/input.jsx"
 
 function Login() {
   const [inputData, setInputData] = useState({

@@ -1,9 +1,9 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, CardContent }    from "@/components/ui/card";
-import RecoverySkeletonLoader from "../recovery/RecoverySkeleton";
-import SectionBlock from "../recovery/SectionBlock";
+import { Card, CardContent }    from "@/components/ui/card.jsx";
+import RecoverySkeletonLoader from "../recovery/RecoverySkeleton.jsx";
+import SectionBlock from "../recovery/SectionBlock.jsx";
 
 
 

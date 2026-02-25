@@ -6,8 +6,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/dialog.jsx";
+import { Button } from "@/components/ui/button.jsx";
 import { Bell, BellOff, Clock } from "lucide-react";
 
 export default function SetReminderModal({ open, onClose }) {

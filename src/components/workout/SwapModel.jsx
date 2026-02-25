@@ -5,13 +5,13 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input }  from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Badge }  from "@/components/ui/badge";
+} from "@/components/ui/dialog.jsx";
+import { Input }  from "@/components/ui/input.jsx";
+import { Button } from "@/components/ui/button.jsx";
+import { Badge }  from "@/components/ui/badge.jsx";
 import { Check }  from "lucide-react";
-import { getExercises } from "@/lib/api";
-import { MUSCLE_META, MUSCLE_LIST, DIFFICULTY_COLOR } from "@/constants/workout.constants";
+import { getExercises } from "@/lib/api.js";
+import { MUSCLE_META, MUSCLE_LIST, DIFFICULTY_COLOR } from "@/constants/workout.constants.js";
 
 
 export default function SwapModal({ open, targetEx, onClose, onSwap }) {

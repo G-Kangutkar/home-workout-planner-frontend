@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton.jsx";
 import {
   Flame,
   Beef,
@@ -9,10 +9,10 @@ import {
   Lightbulb,
   AlertCircle,
 } from "lucide-react";
-import PlanSkeleton from "@/components/nutrition/PlanSkeleton";
-import RecipeModal from "@/components/nutrition/RecipeModal";
-import MacroBar from "@/components/nutrition/MacroBar";
-import MealCard from "@/components/nutrition/MealCard";
+import PlanSkeleton from "@/components/nutrition/PlanSkeleton.jsx";
+import RecipeModal from "@/components/nutrition/RecipeModal.jsx";
+import MacroBar from "@/components/nutrition/MacroBar.jsx";
+import MealCard from "@/components/nutrition/MealCard.jsx";
 
 const GOAL_META = {
   weight_loss: { color: "text-orange-400", badge: "border-orange-400/30 bg-orange-400/10 text-orange-400", accent: "bg-orange-400" },

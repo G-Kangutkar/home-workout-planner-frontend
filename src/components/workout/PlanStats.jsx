@@ -1,9 +1,9 @@
 
-import { Badge }   from "@/components/ui/badge";
-import { Button }  from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Badge }   from "@/components/ui/badge.jsx";
+import { Button }  from "@/components/ui/button.jsx";
+import { Card, CardContent } from "@/components/ui/card.jsx";
 import { Pencil }  from "lucide-react";
-import { GOAL_META } from "@/constants/workout.constants";
+import { GOAL_META } from "@/constants/workout.constants.js";
 
 
 export default function PlanStats({ plan, onRenameClick }) {

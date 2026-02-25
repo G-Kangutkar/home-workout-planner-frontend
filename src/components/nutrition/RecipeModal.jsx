@@ -3,8 +3,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
+} from "@/components/ui/dialog.jsx";
+import { Badge } from "@/components/ui/badge.jsx";
 // import { ScrollArea } from "@/components/ui/scroll-area";
 import {Clock,ChefHat} from "lucide-react";
 

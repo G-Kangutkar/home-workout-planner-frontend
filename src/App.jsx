@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "sonner"
 import './App.css'
-import WorkoutPlanPage from "@/pages/workout/WorkoutPlanPage";
-import Login from "./pages/auth/loginPage";
-import Signup from "./pages/auth/signupPage";
-import ProfilePage from "./pages/profile/ProfilePage";
-import PerformancePage from "./pages/performance/PerformancePage";
-import NutritionPage from "./pages/nutrition/nutritionPlan";
-import ProtectedRoute from "./components/ProtectedRoute";
+import WorkoutPlanPage from "@/pages/workout/WorkoutPlanPage.jsx";
+import Login from "./pages/auth/loginPage.jsx";
+import Signup from "./pages/auth/signupPage.jsx";
+import ProfilePage from "./pages/profile/ProfilePage.jsx";
+import PerformancePage from "./pages/performance/PerformancePage.jsx";
+import NutritionPage from "./pages/nutrition/nutritionPlan.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function App() {
   

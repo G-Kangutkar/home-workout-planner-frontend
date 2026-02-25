@@ -1,5 +1,5 @@
 
-import { DAYS_ORDER, DAY_SHORT } from "@/constants/workout.constants";
+import { DAYS_ORDER, DAY_SHORT } from "@/constants/workout.constants.js";
 
 
 export default function DayTabs({ activeDay, days, todayName, onSelect }) {

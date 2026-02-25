@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton.jsx";
 export default function PlanSkeleton() {
   return (
     <div className="flex flex-col gap-4 px-4">

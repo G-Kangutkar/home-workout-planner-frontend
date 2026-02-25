@@ -7,14 +7,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Label }  from "@/components/ui/label";
-import { Input }  from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { saveProfile } from "@/lib/api";
-import GoalSelector from "@/components/Profile/goalSelector";
-import ActivitySelector from "@/components/Profile/activitySelector";
-import DurationSelector from "@/components/Profile/durationSelector";
+} from "@/components/ui/card.jsx";
+import { Label }  from "@/components/ui/label.jsx";
+import { Input }  from "@/components/ui/input.jsx";
+import { Button } from "@/components/ui/button.jsx";
+import { saveProfile } from "@/lib/api.js";
+import GoalSelector from "@/components/Profile/goalSelector.jsx";
+import ActivitySelector from "@/components/Profile/activitySelector.jsx";
+import DurationSelector from "@/components/Profile/durationSelector.jsx";
 
 function ProfilePage() {
   const navigate = useNavigate();

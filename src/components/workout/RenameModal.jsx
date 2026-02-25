@@ -6,9 +6,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog";
-import { Input }  from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/dialog.jsx";
+import { Input }  from "@/components/ui/input.jsx";
+import { Button } from "@/components/ui/button.jsx";
   
 export default function RenameModal({ open, currentName, onClose, onSave }) {
   const [name, setName]     = useState(currentName);
