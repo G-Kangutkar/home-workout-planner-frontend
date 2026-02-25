@@ -65,7 +65,7 @@ export default function WorkoutPlanPage() {
   const todayName = DAYS_ORDER[
     new Date().getDay() === 0 ? 6 : new Date().getDay() - 1
   ];
-
+//  console.log("plan",plan)
   //  Fetch active plan 
   const fetchPlan = useCallback(async () => {
     setLoading(true);
@@ -563,7 +563,7 @@ export default function WorkoutPlanPage() {
               {/* Exercise grid or rest card */}
               <div key={activeDay} style={{ animation: "fadeUp 0.25s ease both" }}>
                 {activeDayData?.is_rest_day ? (
-                  <RestDayCard />
+                  <RestDayCard goal={plan.goal} />
                 ) : (
                   <div className="grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                     {activeDayData?.exercises?.map((ex, i) => (

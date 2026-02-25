@@ -36,7 +36,10 @@ function Login() {
       localStorage.setItem('token', token);
       navigate('/profile')
     } catch (error) {
-      console.log('error at handling form submission', error.message)
+      console.log('error at handling form submission', error.message);
+      const serverMessage = error.response?.data?.error || error.message;
+
+       toast.error(serverMessage)
     }
     finally {
       setLoading(false)

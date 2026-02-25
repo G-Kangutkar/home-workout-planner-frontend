@@ -7,6 +7,7 @@ import Signup from "./pages/auth/signupPage";
 import ProfilePage from "./pages/profile/ProfilePage";
 import PerformancePage from "./pages/performance/PerformancePage";
 import NutritionPage from "./pages/nutrition/nutritionPlan";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   
@@ -28,10 +29,12 @@ function App() {
       <Routes>
         <Route path="/"        element={<Login />} />
         <Route path="/signup" element={<Signup/>} />
+        <Route element={<ProtectedRoute />}>
         <Route path="/profile" element={<ProfilePage/>}/>
         <Route path="/workout" element={<WorkoutPlanPage />} />
         <Route path="/performance" element={<PerformancePage/>}/>
         <Route path="/nutrition" element={<NutritionPage/>}/>
+        </Route>
       </Routes>
     </BrowserRouter>
   )
