@@ -36,7 +36,7 @@ export default function CompleteWorkoutButton({ dayId, dayName, exercises }) {
     try {
       const jwt = localStorage.getItem("token");
       const res = await axios.get(
-        `http://localhost:8080/api/check-logged/${dayId}`,
+        `https://home-workout-planner.onrender.com/api/check-logged/${dayId}`,
         { headers: { Authorization: `Bearer ${jwt}` } }
       );
       setIsDisable(res.data.alreadyLogged);
@@ -76,7 +76,7 @@ export default function CompleteWorkoutButton({ dayId, dayName, exercises }) {
       try {
         const jwt = localStorage.getItem("token");
         const res = await axios.post(
-          "http://localhost:8080/api/adapt-intensity",
+          "https://home-workout-planner.onrender.com/api/adapt-intensity",
           { dayId },
           { headers: { Authorization: `Bearer ${jwt}` } }
         );

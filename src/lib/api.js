@@ -1,24 +1,10 @@
-// src/lib/api.js
-// ─────────────────────────────────────────────────────────────────
-// All backend API calls using Axios.
-//
-// Why Axios over fetch?
-//   1. Automatically parses JSON response (no .json() needed)
-//   2. Automatically throws error on non-2xx status
-//   3. Cleaner syntax with baseURL + interceptors
-//   4. Request/response interceptors handle token automatically
-//
-// Install: npm install axios
-// ─────────────────────────────────────────────────────────────────
+
 import axios from "axios";
 
-// ─────────────────────────────────────────────────────────────────
 // AXIOS INSTANCE
-// Creates a custom axios with baseURL + default headers.
-// All functions below use this instance — not plain axios.
-// ─────────────────────────────────────────────────────────────────
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000",
+  baseURL: import.meta.env.VITE_API_URL || "https://home-workout-planner.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },
@@ -61,30 +47,30 @@ api.interceptors.response.use(
 );
 
 // ═════════════════════════════════════════════════════════════════
-// AUTH API
-// Matches routes in: server/routes/auth.routes.js
-// ═════════════════════════════════════════════════════════════════
+// // AUTH API
+// // Matches routes in: server/routes/auth.routes.js
+// // ═════════════════════════════════════════════════════════════════
 
-// POST /api/auth/register
-// Registers a new user → returns { token, user }
-export async function register(name, email, password) {
-  const { data } = await api.post("/api/auth/register", {
-    name,
-    email,
-    password,
-  });
-  return data;
-}
+// // POST /api/auth/register
+// // Registers a new user → returns { token, user }
+// export async function register(name, email, password) {
+//   const { data } = await api.post("/api/auth/register", {
+//     name,
+//     email,
+//     password,
+//   });
+//   return data;
+// }
 
-// POST /api/auth/login
-// Logs in existing user → returns { token, user }
-export async function login(email, password) {
-  const { data } = await api.post("/api/auth/login", {
-    email,
-    password,
-  });
-  return data;
-}
+// // POST /api/auth/login
+// // Logs in existing user → returns { token, user }
+// export async function login(email, password) {
+//   const { data } = await api.post("/api/auth/login", {
+//     email,
+//     password,
+//   });
+//   return data;
+// }
 
 // ═════════════════════════════════════════════════════════════════
 // PROFILE API
@@ -115,7 +101,6 @@ export async function deleteProfile() {
 
 // ═════════════════════════════════════════════════════════════════
 // WORKOUT PLAN API
-// Matches routes in: server/routes/workout.routes.js
 // ═════════════════════════════════════════════════════════════════
 
 // GET /api/workout/plan
@@ -202,30 +187,17 @@ export async function removeExercise(dayExerciseId) {
 // PERFORMANCE TRACKING API
 // ═════════════════════════════════════════════════════════════════
 
-/**
- * Log a completed workout session
- * @param {Object} workoutData - { day_id, day_name, duration_minutes, exercises, notes }
- * exercises: [{ exercise_id, sets_completed, reps_completed, duration_seconds, notes }]
- */
 export async function logWorkout(workoutData) {
   const { data } = await api.post("/performance/log-workout", workoutData);
   return data;
 }
 
-/**
- * Get performance statistics for charts
- * @param {string} period - "7days", "30days", "90days", "all"
- */
 export async function getPerformanceStats(period = "30days") {
   const { data } = await api.get("/performance/stats", { params: { period } });
   return data;
 }
 
-/**
- * Get workout history with details
- * @param {number} limit - number of workouts to fetch
- * @param {number} offset - pagination offset
- */
+
 export async function getWorkoutHistory(limit = 20, offset = 0) {
   const { data } = await api.get("/performance/history", { 
     params: { limit, offset } 

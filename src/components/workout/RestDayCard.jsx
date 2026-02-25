@@ -52,7 +52,7 @@ export default function RestDayCard({ goal }) {
       try {
         const jwt = localStorage.getItem("token");
         const res = await axios.get(
-          `http://localhost:8080/api/recovery/${safeGoal}`,
+          `https://home-workout-planner.onrender.com/api/recovery/${safeGoal}`,
           { headers: { Authorization: `Bearer ${jwt}` } }
         );
         setSections(res.data.sections);

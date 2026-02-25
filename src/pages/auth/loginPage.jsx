@@ -28,7 +28,7 @@ function Login() {
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:8080/register/login', inputData);
+      const response = await axios.post('https://home-workout-planner.onrender.com/register/login', inputData);
       console.log('Signup successful!', response.data);
       toast.success("Account created successfully!")
       const token = response?.data?.accessToken;

@@ -36,7 +36,7 @@ export default function SetReminderModal({ open, onClose }) {
 
       // Save FCM token to profile
       await axios.post(
-        "/api/save-token",
+        "https://home-workout-planner.onrender.com/api/save-token",
         { token },
         { headers: { Authorization: `Bearer ${jwt}` } }
       );
@@ -55,7 +55,7 @@ export default function SetReminderModal({ open, onClose }) {
 
       // ... rest of your code, use utcTime instead of time
       await axios.post(
-        "/api/set-reminder",
+        "https://home-workout-planner.onrender.com/api/set-reminder",
         { remindTime: utcTime },
         { headers: { Authorization: `Bearer ${jwt}` } }
       );

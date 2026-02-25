@@ -35,7 +35,7 @@ export default function NutritionPage() {
         setLoading(true);
         setError(null);
         const jwt = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:8080/api/nutrition-plan", {
+        const res = await axios.get("https://home-workout-planner.onrender.com/api/nutrition-plan", {
           headers: { Authorization: `Bearer ${jwt}` },
         });
         setData(res.data);

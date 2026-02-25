@@ -37,7 +37,7 @@ function Signup() {
         e.preventDefault();
         try {
             setLoading(true);
-            const response = await axios.post('http://localhost:8080/register/signup', inputData);
+            const response = await axios.post('https://home-workout-planner.onrender.com/register/signup', inputData);
             console.log('Signup successful!', response.data);
             toast.success('Account created successfully!')
             navigate('/')
