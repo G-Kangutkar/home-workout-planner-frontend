@@ -177,7 +177,7 @@ function Navbar() {
           </div>
 
           {/* ── Desktop nav links ── */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="max-md:hidden flex items-center gap-1">
             <Link
               to="/nutrition"
               className="px-4 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-lime-400 hover:bg-white/5 transition-all duration-200"
