@@ -179,13 +179,15 @@ function Navbar() {
           {/* ── Desktop nav links ── */}
           <div className="hidden md:flex items-center gap-1">
             <a
-              href="/nutrition"
+              // href="/nutrition"
+               navigate={'/nutrition'}
               className="px-4 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-lime-400 hover:bg-white/5 transition-all duration-200"
             >
               Nutrition Plan
             </a>
             <a
-              href="/performance"
+              // href="/performance"
+              navigate={'/performance'}
               className="px-4 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-cyan-400 hover:bg-white/5 transition-all duration-200"
             >
               Performance
