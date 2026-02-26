@@ -1,16 +1,238 @@
-# React + Vite
+# 🏋️‍♂️ Home Workout Planner – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/React-19-blue?logo=react)
+![Vite](https://img.shields.io/badge/Vite-7-purple?logo=vite)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-38B2AC?logo=tailwindcss)
+![Firebase](https://img.shields.io/badge/Firebase-Enabled-FFCA28?logo=firebase)
+![shadcn/ui](https://img.shields.io/badge/shadcn-ui-black?logo=vercel)
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📌 Project Title
 
-## React Compiler
+**Home Workout Planner**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 📖 Project Description
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Home Workout Planner is a modern React-based fitness web application that helps users build consistent workout habits at home. It provides customizable routines, adaptive intensity levels, progress tracking, reminders, and nutrition guidance — all without requiring gym equipment.
+
+The application focuses on simplicity, performance tracking, and an engaging user experience.
+
+---
+
+## 🚀 Live Demo
+
+🌍 **Frontend Deployment:** https://cosmic-paletas-3425dc.netlify.app  
+🔗 **Backend API:** https://home-workout-planner.onrender.com  
+🎥 **Video Walkthrough:** _Add YouTube/Loom link here_
+
+---
+
+## ✨ Features
+
+- ✅ **Customizable and auto suggested Workout Routines**
+- 🎥 **Video Exercise Tutorial Links**
+- 📊 **Progress & Performance Tracker**
+- 🏠 **Equipment-Free Workouts**
+- 🔔 **Daily Exercise & Stretching Reminders**
+- 📈 **Adaptive Intensity Levels**
+- 🥗 **Meal & Nutrition Planning**
+- ⏱️ **Exercise Timer & Interval Tracker**
+- 🧘 **Recovery & Wellness Guidance**
+
+
+---
+
+## 🛠 Tech Stack Used
+
+### 🚀 Frontend Core
+
+- React 19
+- Vite
+
+### 🎨 UI & Styling
+
+- Tailwind CSS 4
+- shadcn/ui
+- Lucide React
+
+### 🔁 Routing
+
+- React Router DOM 7
+
+### 📊 Charts & Analytics
+
+- Recharts
+
+### 🔔 Notifications
+
+- Sonner
+
+
+### 🌐 API & Backend Communication
+
+- Axios
+
+### 🔥 Services
+
+- Firebase
+
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/your-username/home-workout-planner-frontend.git
+```
+## 📂 Navigate to Project Directory
+
+```bash
+cd home-workout-planner-frontend
+```
+
+---
+
+## 📦 Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## ▶️ Start Development Server
+
+```bash
+npm run dev
+```
+
+App runs on:
+
+```
+http://localhost:5173
+```
+
+---
+
+## 🏗 Project Structure
+
+```
+src/
+ ├── components/
+ ├── pages/
+ ├── constants/
+ ├── firebase/
+ ├── lib/
+ ├── App.jsx
+ └── main.jsx
+```
+
+---
+
+## 📸 Screenshots
+
+
+<table>
+
+<tr>
+<td align="center">
+<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<b>📝 Signup</b>
+</td>
+<td align="center">
+<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<b>🔐 Login</b>
+</td>
+</tr>
+<tr>
+<td align="center">
+<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<b>✍️ Profile Form</b>
+</td>
+<td align="center">
+<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<b>✍️ Profile Form</b>
+</td>
+</tr>
+<tr>
+<td align="center">
+<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<b>✍️ Profile Form</b>
+</td>
+<td align="center">
+<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<b> 👤 Profile Page</b>
+</td>
+</tr>
+<tr>
+<td align="center">
+<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<b>📅 Workout Plan</b>
+</td>
+<td align="center">
+<img src="./public/screenshots/dashboard2.png" width="400px"/><br/>
+<b>📅 Workout Plan</b>
+</td>
+</tr>
+<tr>
+<td align="center">
+<img src="./public/screenshots/dashboard3.png" width="400px"/><br/>
+<b>📅 Workout Plan</b>
+</td>
+<td align="center">
+<img src="./public/screenshots/performance1.png" width="400px"/><br/>
+<b>📊 Performance Tracker</b>
+</td>
+</tr>
+
+<tr>
+<td align="center">
+<img src="./public/screenshots/performance2.png" width="400px"/><br/>
+<b>📊 Performance Tracker</b>
+</td>
+<td align="center">
+<img src="./public/screenshots/nutrition1.png" width="400px"/><br/>
+<b>🥗 Nutrition</b>
+</td>
+</tr>
+
+<tr>
+<td align="center">
+<img src="./public/screenshots/nutrition2.png" width="400px"/><br/>
+<b>🥗 Nutrition</b>
+</td>
+
+<td align="center">
+<img src="./public/screenshots/remainder.png" width="400px"/><br/>
+<b>⏱️ Exercise Timer</b>
+</td>
+</tr>
+</table>
+
+</div>
+
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env` file in the root directory:
+
+```
+VITE_API_BASE_URL=your_backend_url
+VITE_FIREBASE_API_KEY=your_key
+VITE_FIREBASE_AUTH_DOMAIN=your_domain
+VITE_FIREBASE_PROJECT_ID=your project id
+VITE_FIREBASE_MESSAGE_SENDER=your message sender
+VITE_FIREBASE_APP_ID=your app id
+VITE_FIREBASE_VAPID_KEY=your vapid key
+```
+
+---
+
+
