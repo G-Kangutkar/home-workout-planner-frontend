@@ -321,16 +321,10 @@ function Navbar() {
               title="My Profile"
               className="ml-1 w-9 h-9 rounded-full flex items-center justify-center border border-zinc-700 bg-zinc-800/60 hover:border-lime-400/50 hover:bg-lime-400/10 transition-all duration-200 group"
             >
-              <UserCircle2 className="w-5 h-5 text-zinc-400 group-hover:text-lime-400 transition-colors duration-200" />
+              <UserCircle2 className="w-5 h-5 text-cyan-500 group-hover:text-lime-400 transition-colors duration-200" />
             </Link>
 
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="ml-2 px-4 py-2 rounded-xl text-sm font-bold text-zinc-900 bg-lime-400 hover:bg-lime-300 transition-all duration-200 shadow-[0_0_16px_rgba(163,230,53,0.3)] hover:shadow-[0_0_24px_rgba(163,230,53,0.5)] hover:-translate-y-0.5 active:translate-y-0"
-            >
-              Log out
-            </button>
+           
           </div>
 
           {/* ── Mobile: profile + logout + hamburger ── */}
@@ -341,16 +335,16 @@ function Navbar() {
               title="My Profile"
               className="w-8 h-8 rounded-full flex items-center justify-center border border-zinc-700 bg-zinc-800/60 hover:border-lime-400/50 transition-all duration-200"
             >
-              <UserCircle2 className="w-4 h-4 text-zinc-400" />
+              <UserCircle2 className="w-4 h-4 text-cyan-500" />
             </Link>
 
-            <button
+            {/* <button
               type="button"
               onClick={handleLogout}
               className="px-3 py-1.5 rounded-lg text-xs font-bold text-zinc-900 bg-lime-400 hover:bg-lime-300 transition-all duration-200 shadow-[0_0_12px_rgba(163,230,53,0.3)]"
             >
               Logout
-            </button>
+            </button> */}
             <button
               type="button"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -387,7 +381,7 @@ function Navbar() {
           <Link
             to="/profilepage"
             onClick={() => setMenuOpen(false)}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-zinc-400 hover:text-lime-400 hover:bg-white/5 transition-all duration-200"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-cyan-500 hover:text-lime-400 hover:bg-white/5 transition-all duration-200"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 shrink-0" />
             My Profile

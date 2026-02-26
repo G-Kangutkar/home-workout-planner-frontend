@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
 import {
   UserCircle2, Pencil, Trash2, LogOut, Save, X,
-  Weight, Ruler, Target, Zap, Clock,
+  Weight, Ruler, Target, Zap, Clock,ArrowLeft
 } from "lucide-react";
 import { getProfile, saveProfile, deleteProfile } from "@/lib/api.js";
 import NumberField from "@/components/Profile/NumberField.jsx";
@@ -90,7 +90,7 @@ export default function ProfilePage() {
       });
       setProfile(res.profile);
       setEditing(false);
-      toast.success("✅ Profile updated!");
+      toast.success("✅ Profile updated!, now hit regenerate on home");
     } catch (err) {
       toast.error(err.message || "Failed to save profile");
     } finally {
@@ -136,16 +136,43 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 pt-20 pb-12 px-4">
+     <div
+      className="min-h-screen pt-20 pb-12 px-4 relative overflow-hidden"
+      style={{ background: "linear-gradient(135deg, #050a05 0%, #081418 45%, #0a140a 75%, #050a05 100%)" }}
+    >
+         <div
+        className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-170 h-80 rounded-full opacity-[0.18] blur-[110px]"
+        style={{ background: "radial-gradient(ellipse, #38bdf8 0%, transparent 65%)" }}
+      />
       <div
-        className="w-full max-w-md mx-auto"
+        className="pointer-events-none absolute -bottom-16 -left-24 w-105 h-105 rounded-full opacity-[0.12] blur-[130px]"
+        style={{ background: "radial-gradient(ellipse, #a3e635 0%, transparent 65%)" }}
+      />
+      <div
+        className="pointer-events-none absolute bottom-1/4 -right-16 w-75 h-75 rounded-full opacity-[0.10] blur-[100px]"
+        style={{ background: "radial-gradient(ellipse, #9ca3af 0%, transparent 65%)" }}
+      />
+
+      {/* CHANGE 3d — back button */}
+      <div className="w-full max-w-md mx-auto mb-5 relative z-10">
+        <Link
+          to="/workout"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold
+                     text-zinc-400 border border-zinc-700/50 bg-black/20 backdrop-blur-sm
+                     hover:text-cyan-400 hover:border-cyan-400/40 hover:bg-cyan-400/5
+                     transition-all duration-200 group"
+        >
+          <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
+          Back to Workout
+        </Link>
+        </div>
+      <div
+        className="w-full max-w-md mx-auto relative z-10"
         style={{ animation: "fadeUp 0.4s ease both" }}
       >
-
-        {/* ── Profile Card ── */}
         <div
-          className="rounded-3xl border border-zinc-800 overflow-hidden"
-          style={{ background: "linear-gradient(160deg, #18181b 0%, #0f0f11 100%)" }}
+          className="rounded-3xl border border-zinc-800/60 overflow-hidden"
+          style={{ background: "linear-gradient(160deg, rgba(24,24,28,0.85) 0%, rgba(12,20,25,0.90) 50%, rgba(15,22,12,0.85) 100%)" }}
         >
           {/* Accent top bar */}
           <div
