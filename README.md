@@ -87,7 +87,7 @@ The application focuses on simplicity, performance tracking, and an engaging use
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/home-workout-planner-frontend.git
+git clone https://github.com/G-Kangutkar/home-workout-planner-frontend.git
 ```
 ## 📂 Navigate to Project Directory
 
@@ -141,48 +141,48 @@ src/
 
 <tr>
 <td align="center">
-<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<img src="./public/screenshots/signup.png" width="400px"/><br/>
 <b>📝 Signup</b>
 </td>
 <td align="center">
-<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<img src="./public/screenshots/login.png" width="400px"/><br/>
 <b>🔐 Login</b>
 </td>
 </tr>
 <tr>
 <td align="center">
-<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<img src="./public/screenshots/profile1.png" width="400px"/><br/>
 <b>✍️ Profile Form</b>
 </td>
 <td align="center">
-<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<img src="./public/screenshots/profile2.png" width="400px"/><br/>
 <b>✍️ Profile Form</b>
 </td>
 </tr>
 <tr>
 <td align="center">
-<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<img src="./public/screenshots/profile3.png" width="400px"/><br/>
 <b>✍️ Profile Form</b>
 </td>
 <td align="center">
-<img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
+<img src="./public/screenshots/profilepage.png" width="400px"/><br/>
 <b> 👤 Profile Page</b>
 </td>
 </tr>
 <tr>
 <td align="center">
 <img src="./public/screenshots/dashboard1.png" width="400px"/><br/>
-<b>📅 Workout Plan</b>
+<b>📅 Workout Plan Dashboard</b>
 </td>
 <td align="center">
 <img src="./public/screenshots/dashboard2.png" width="400px"/><br/>
-<b>📅 Workout Plan</b>
+<b>📅 Exercise Card</b>
 </td>
 </tr>
 <tr>
 <td align="center">
 <img src="./public/screenshots/dashboard3.png" width="400px"/><br/>
-<b>📅 Workout Plan</b>
+<b>📅 Rest Card</b>
 </td>
 <td align="center">
 <img src="./public/screenshots/performance1.png" width="400px"/><br/>
@@ -209,6 +209,12 @@ src/
 
 <td align="center">
 <img src="./public/screenshots/remainder.png" width="400px"/><br/>
+<b>⏱️ Remainder</b>
+</td>
+</tr>
+<tr>
+<td align="center">
+<img src="./public/screenshots/timer.png" width="400px"/><br/>
 <b>⏱️ Exercise Timer</b>
 </td>
 </tr>
