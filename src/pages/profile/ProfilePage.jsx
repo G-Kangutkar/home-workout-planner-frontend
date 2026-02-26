@@ -1,600 +1,331 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card.jsx";
-import { Label }  from "@/components/ui/label.jsx";
-import { Input }  from "@/components/ui/input.jsx";
-import { Button } from "@/components/ui/button.jsx";
-import { saveProfile } from "@/lib/api.js";
-import GoalSelector from "@/components/Profile/goalSelector.jsx";
-import ActivitySelector from "@/components/Profile/activitySelector.jsx";
-import DurationSelector from "@/components/Profile/durationSelector.jsx";
+  UserCircle2, Pencil, Trash2, LogOut, Save, X,
+  Weight, Ruler, Target, Zap, Clock,
+} from "lucide-react";
+import { getProfile, saveProfile, deleteProfile } from "@/lib/api.js";
+import NumberField from "./components/Profile/NumberField.jsx";
+import SelectField from "./components/Profile/SelectFields.jsx";
 
-function ProfilePage() {
-  const navigate = useNavigate();
+// ── Constants ─────────────────────────────────────────────────────────────────
+const GOAL_OPTIONS = [
+  { value: "weight_loss",     label: "Weight Loss",     emoji: "🔥" },
+  { value: "muscle_gain",     label: "Muscle Gain",     emoji: "💪" },
+  { value: "general_fitness", label: "General Fitness", emoji: "⚡" },
+  { value: "flexibility",     label: "Flexibility",     emoji: "🧘" },
+];
 
-  // ── Your existing state — kept exactly as you had it ─────────
-  const [profileData, setprofileData] = useState({
+const ACTIVITY_OPTIONS = [
+  { value: "beginner",     label: "Beginner",     desc: "Little to no exercise"       },
+  { value: "intermediate", label: "Intermediate", desc: "2–4 days/week"               },
+  { value: "advanced",     label: "Advanced",     desc: "5+ days/week"                },
+];
+
+const GOAL_META = {
+  weight_loss:     { emoji: "🔥", accent: "#f97316" },
+  muscle_gain:     { emoji: "💪", accent: "#a3e635" },
+  general_fitness: { emoji: "⚡", accent: "#38bdf8" },
+  flexibility:     { emoji: "🧘", accent: "#a78bfa" },
+};
+
+
+
+// ── Main Page ─────────────────────────────────────────────────────────────────
+export default function ProfilePage() {
+  const navigate  = useNavigate();
+  const [profile, setProfile]   = useState(null);
+  const [loading, setLoading]   = useState(true);
+  const [editing, setEditing]   = useState(false);
+  const [saving,  setSaving]    = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+  // Form state
+  const [form, setForm] = useState({
     weight:           "",
     height:           "",
-    fitness_goal:     "",
-    activity_level:   "",
+    fitness_goal:     "general_fitness",
+    activity_level:   "beginner",
     workout_duration: "",
   });
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState("");
+  // ── Fetch profile on mount
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await getProfile();
+        if (res.profile) {
+          setProfile(res.profile);
+          setForm({
+            weight:           res.profile.weight           ?? "",
+            height:           res.profile.height           ?? "",
+            fitness_goal:     res.profile.fitness_goal     ?? "general_fitness",
+            activity_level:   res.profile.activity_level   ?? "beginner",
+            workout_duration: res.profile.workout_duration ?? "",
+          });
+        }
+      } catch (err) {
+        toast.error("Failed to load profile");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetch();
+  }, []);
 
-  // ── Your existing handleProfile — kept exactly as you had it ─
-  // Used by weight + height text inputs (reads from e.target)
-  const handleProfile = (e) => {
-    const { name, value } = e.target;
-    setprofileData((prev) => ({
-      ...prev, [name]: value,
-    }));
-  };
+  const field = (key) => (val) => setForm((f) => ({ ...f, [key]: val }));
 
-  // Used by selector components (goal, level, duration)
-  // Called directly with field + value — no event object needed
-  const handleSelect = (field, value) => {
-    setprofileData((prev) => ({
-      ...prev, [field]: value,
-    }));
-  };
-
-  // ── Validation ────────────────────────────────────────────────
-  const validate = () => {
-    if (!profileData.weight || profileData.weight < 10 || profileData.weight > 500)
-      return "Weight must be between 10 and 500 kg.";
-    if (!profileData.height || profileData.height < 50 || profileData.height > 300)
-      return "Height must be between 50 and 300 cm.";
-    if (!profileData.fitness_goal)
-      return "Please select a fitness goal.";
-    if (!profileData.activity_level)
-      return "Please select your activity level.";
-    if (!profileData.workout_duration)
-      return "Please select a workout duration.";
-    return null; // null means valid
-  };
-
-  // ── Your existing handleAddProfile — fixed and completed ─────
-  const handleAddProfile = async (e) => {
-    e.preventDefault();
-    setError("");
-
-    // Run validation first
-    const validationError = validate();
-    if (validationError) {
-      setError(validationError);
-      toast.error(validationError);
-      return; // stop here if invalid
-    }
-
-    setLoading(true);
+  // ── Save
+  const handleSave = async () => {
+    setSaving(true);
     try {
-      // Convert strings → numbers before sending to backend
-      await saveProfile({
-        weight:           Number(profileData.weight),
-        height:           Number(profileData.height),
-        fitness_goal:     profileData.fitness_goal,
-        activity_level:   profileData.activity_level,
-        workout_duration: Number(profileData.workout_duration),
+      const res = await saveProfile({
+        weight:           Number(form.weight),
+        height:           Number(form.height),
+        fitness_goal:     form.fitness_goal,
+        activity_level:   form.activity_level,
+        workout_duration: Number(form.workout_duration),
       });
-
-      toast.success("Profile saved! Generating your workout plan...");
-      navigate("/workout"); // go to workout plan page
-
+      setProfile(res.profile);
+      setEditing(false);
+      toast.success("✅ Profile updated!");
     } catch (err) {
-      setError(err.message);
-      toast.error(err.message);
+      toast.error(err.message || "Failed to save profile");
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
 
-  // ── Render ────────────────────────────────────────────────────
-  return (
-    // <div
-    //   className="min-h-screen flex items-center justify-center p-4 relative"
-    //   style={{ background: "#0a0a0a" }}
-    // >
-    //   {/* Background glow — same as rest of app */}
-    //   <div className="pointer-events-none fixed inset-0 overflow-hidden -z-10">
-    //     <div className="absolute -top-32 -right-32 w-125 h-125 rounded-full opacity-[0.07]"
-    //       style={{ background: "radial-gradient(circle, #a3e635 0%, transparent 70%)" }} />
-    //     <div className="absolute -bottom-20 -left-20 w-75 h-75 rounded-full opacity-[0.07]"
-    //       style={{ background: "radial-gradient(circle, #a3e635 0%, transparent 70%)" }} />
-    //   </div>
+  // ── Delete
+  const handleDelete = async () => {
+    setDeleting(true);
+    try {
+      await deleteProfile();
+      toast.success("Profile deleted");
+      localStorage.removeItem("token");
+      navigate("/");
+    } catch (err) {
+      toast.error("Failed to delete profile");
+    } finally {
+      setDeleting(false);
+    }
+  };
 
-    //   <div className="w-full max-w-lg">
+  // ── Logout
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+    toast.success("🚀 Logged out successfully!");
+  };
 
-    //     {/* Brand header */}
-    //     <div className="flex items-center justify-center gap-3 mb-8">
-    //       <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(163,230,53,0.4)]"
-    //         style={{ background: "#a3e635" }}>
-    //         <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-zinc-900" viewBox="0 0 24 24"
-    //           fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    //           <line x1="7" y1="12" x2="17" y2="12" />
-    //           <path d="M3 9.5h4v5H3zM17 9.5h4v5h-4z" />
-    //         </svg>
-    //       </div>
-    //       <span className="text-white font-black text-xl tracking-tight">FITNESS PROFILE</span>
-    //     </div>
+  const goalMeta = GOAL_META[profile?.fitness_goal] || GOAL_META.general_fitness;
 
-    //     {/* ── Main Card — your Card structure kept ── */}
-    //     <Card
-    //       className="border-zinc-800 shadow-2xl"
-    //       style={{ background: "rgba(24,24,27,0.85)", backdropFilter: "blur(12px)" }}
-    //     >
-    //       <CardHeader className="pb-2">
-    //         <CardTitle className="text-white text-2xl font-black">
-    //           Build Your Profile 💪
-    //         </CardTitle>
-    //         <CardDescription className="text-zinc-500">
-    //           Tell us about yourself so we can generate your perfect workout plan.
-    //         </CardDescription>
-    //       </CardHeader>
-
-    //       <CardContent>
-    //         <form onSubmit={handleAddProfile} className="flex flex-col gap-7 mt-2">
-
-    //           {/* ── Section 1: Body Metrics ── */}
-    //           <div className="flex flex-col gap-3">
-    //             <p className="text-xs font-bold uppercase tracking-widest text-zinc-500">
-    //               📏 Body Metrics
-    //             </p>
-
-    //             <div className="grid grid-cols-2 gap-4">
-
-    //               {/* Weight — your existing input, now styled */}
-    //               <div className="flex flex-col gap-2">
-    //                 <Label htmlFor="weight"
-    //                   className="text-zinc-400 text-xs font-semibold uppercase tracking-widest">
-    //                   Weight
-    //                 </Label>
-    //                 <div className="relative">
-    //                   <Input
-    //                     id="weight"
-    //                     type="number"
-    //                     name="weight"
-    //                     value={profileData.weight}
-    //                     onChange={handleProfile}
-    //                     placeholder="70"
-    //                     min="10"
-    //                     max="500"
-    //                     required
-    //                     className="bg-zinc-900 border-zinc-700 text-zinc-100
-    //                       placeholder-zinc-600 pr-10
-    //                       focus:border-lime-400 focus-visible:ring-lime-400/20"
-    //                   />
-    //                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-500 font-semibold">
-    //                     kg
-    //                   </span>
-    //                 </div>
-    //               </div>
-
-    //               {/* Height — your existing input, now styled */}
-    //               <div className="flex flex-col gap-2">
-    //                 <Label htmlFor="height"
-    //                   className="text-zinc-400 text-xs font-semibold uppercase tracking-widest">
-    //                   Height
-    //                 </Label>
-    //                 <div className="relative">
-    //                   <Input
-    //                     id="height"
-    //                     type="number"
-    //                     name="height"
-    //                     value={profileData.height}
-    //                     onChange={handleProfile}
-    //                     placeholder="175"
-    //                     min="50"
-    //                     max="300"
-    //                     required
-    //                     className="bg-zinc-900 border-zinc-700 text-zinc-100
-    //                       placeholder-zinc-600 pr-10
-    //                       focus:border-lime-400 focus-visible:ring-lime-400/20"
-    //                   />
-    //                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-500 font-semibold">
-    //                     cm
-    //                   </span>
-    //                 </div>
-    //               </div>
-    //             </div>
-
-    //             {/* Live BMI preview — appears when both values entered */}
-    //             {profileData.weight > 0 && profileData.height > 0 && (
-    //               <div
-    //                 className="flex items-center justify-between px-4 py-3 rounded-xl border border-zinc-700 bg-zinc-900/60"
-    //                 style={{ animation: "fadeUp 0.2s ease both" }}
-    //               >
-    //                 <div>
-    //                   <p className="text-[10px] text-zinc-600 uppercase tracking-widest font-semibold">BMI</p>
-    //                   <p className="text-white font-black text-xl">
-    //                     {(profileData.weight / ((profileData.height / 100) ** 2)).toFixed(1)}
-    //                   </p>
-    //                 </div>
-    //                 <span className={`text-sm font-semibold px-3 py-1 rounded-full border ${
-    //                   (() => {
-    //                     const bmi = profileData.weight / ((profileData.height / 100) ** 2);
-    //                     if (bmi < 18.5) return "text-blue-400 bg-blue-400/10 border-blue-400/30";
-    //                     if (bmi < 25)   return "text-lime-400 bg-lime-400/10 border-lime-400/30";
-    //                     if (bmi < 30)   return "text-yellow-400 bg-yellow-400/10 border-yellow-400/30";
-    //                     return "text-red-400 bg-red-400/10 border-red-400/30";
-    //                   })()
-    //                 }`}>
-    //                   {(() => {
-    //                     const bmi = profileData.weight / ((profileData.height / 100) ** 2);
-    //                     if (bmi < 18.5) return "Underweight";
-    //                     if (bmi < 25)   return "Normal ✅";
-    //                     if (bmi < 30)   return "Overweight";
-    //                     return "Obese";
-    //                   })()}
-    //                 </span>
-    //               </div>
-    //             )}
-    //           </div>
-
-    //           <div className="h-px bg-zinc-800" />
-
-    //           {/* ── Section 2: Fitness Goal ── */}
-    //           <div className="flex flex-col gap-3">
-    //             <p className="text-xs font-bold uppercase tracking-widest text-zinc-500">
-    //               🎯 Fitness Goal
-    //             </p>
-                
-    //             <GoalSelector
-    //               value={profileData.fitness_goal}
-    //               onChange={(val) => handleSelect("fitness_goal", val)}
-    //             />
-    //           </div>
-
-    //           <div className="h-px bg-zinc-800" />
-
-    //           {/* ── Section 3: Activity Level ── */}
-    //           <div className="flex flex-col gap-3">
-    //             <p className="text-xs font-bold uppercase tracking-widest text-zinc-500">
-    //               ⚡ Activity Level
-    //             </p>
-    //             <ActivitySelector
-    //               value={profileData.activity_level}
-    //               onChange={(val) => handleSelect("activity_level", val)}
-    //             />
-    //           </div>
-
-    //           <div className="h-px bg-zinc-800" />
-
-    //           {/* ── Section 4: Workout Duration ── */}
-    //           <div className="flex flex-col gap-3">
-    //             <p className="text-xs font-bold uppercase tracking-widest text-zinc-500">
-    //               ⏱️ Session Duration
-    //             </p>
-    //             <DurationSelector
-    //               value={profileData.workout_duration}
-    //               onChange={(val) => handleSelect("workout_duration", val)}
-    //             />
-    //           </div>
-
-    //           {/* Error message */}
-    //           {error && (
-    //             <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
-    //               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 shrink-0" viewBox="0 0 24 24"
-    //                 fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    //                 <circle cx="12" cy="12" r="10" />
-    //                 <line x1="12" y1="8" x2="12" y2="12" />
-    //                 <line x1="12" y1="16" x2="12.01" y2="16" />
-    //               </svg>
-    //               {error}
-    //             </div>
-    //           )}
-
-    //           {/* Submit button — your existing button, now complete */}
-    //           <Button
-    //             type="submit"
-    //             disabled={loading}
-    //             className="w-full py-6 rounded-xl bg-lime-400 hover:bg-lime-300
-    //               text-zinc-900 font-black transition-all duration-200 
-    //               shadow-[0_0_20px_rgba(163,230,53,0.3)]
-    //               hover:shadow-[0_0_30px_rgba(163,230,53,0.5)]
-    //               disabled:opacity-50 disabled:cursor-not-allowed"
-    //           >
-    //             {loading ? (
-    //               <span className="flex items-center justify-center gap-2 ">
-    //                 <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none">
-    //                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-    //                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-    //                 </svg>
-    //                 Saving Profile…
-    //               </span>
-    //             ) : (
-    //               "Save Profile & Generate Plan 🚀"
-    //             )}
-    //           </Button>
-
-    //         </form>
-    //       </CardContent>
-    //     </Card>
-
-    //     {/* Already set up link */}
-    //     <p className="text-center text-sm text-zinc-600 mt-4">
-    //       Already set up?{" "}
-    //       <button
-    //         type="button"
-    //         onClick={() => navigate("/workout")}
-    //         className="text-lime-400 hover:text-lime-300 font-semibold transition-colors"
-    //       >
-    //         Go to Workout Plan →
-    //       </button>
-    //     </p>
-
-    //   </div>
-
-    //   <style>{`
-    //     @keyframes fadeUp {
-    //       from { opacity: 0; transform: translateY(8px); }
-    //       to   { opacity: 1; transform: translateY(0); }
-    //     }
-    //   `}</style>
-    // </div>
-    <div
-      className="min-h-screen flex items-center justify-center p-4 relative"
-      style={{ background: "#111318" }}
-    >
-      {/* Background glow — same as rest of app */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden -z-10">
-        <div className="absolute -top-32 -right-32 w-125 h-125 rounded-full opacity-[0.07]"
-          style={{ background: "radial-gradient(circle, #a3e635 0%, transparent 70%)" }} />
-        <div className="absolute -bottom-20 -left-20 w-75 h-75 rounded-full opacity-[0.07]"
-          style={{ background: "radial-gradient(circle, #a3e635 0%, transparent 70%)" }} />
-      </div>
-
-      <div className="w-full max-w-lg">
-
-        {/* Brand header */}
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(163,230,53,0.4)]"
-            style={{ background: "#a3e635" }}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-zinc-900" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="7" y1="12" x2="17" y2="12" />
-              <path d="M3 9.5h4v5H3zM17 9.5h4v5h-4z" />
-            </svg>
-          </div>
-          <span className="text-white font-black text-xl tracking-tight">FITNESS PROFILE</span>
+  // ── Loading skeleton
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-16 h-16 rounded-full bg-zinc-800 animate-pulse" />
+          <div className="w-32 h-3 bg-zinc-800 rounded-full animate-pulse" />
+          <div className="w-24 h-2 bg-zinc-800/60 rounded-full animate-pulse" />
         </div>
+      </div>
+    );
+  }
 
-        {/* ── Main Card ── */}
-        <Card
-          className="border-0 rounded-2xl overflow-hidden shadow-[0_2px_0_0_#a3e635,0_20px_60px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.06)]"
-          style={{ background: "rgba(26,28,35,0.98)", backdropFilter: "blur(12px)" }}
+  return (
+    <div className="min-h-screen bg-zinc-950 pt-20 pb-12 px-4">
+      <div
+        className="w-full max-w-md mx-auto"
+        style={{ animation: "fadeUp 0.4s ease both" }}
+      >
+
+        {/* ── Profile Card ── */}
+        <div
+          className="rounded-3xl border border-zinc-800 overflow-hidden"
+          style={{ background: "linear-gradient(160deg, #18181b 0%, #0f0f11 100%)" }}
         >
-          {/* Lime top accent bar */}
-          <div className="h-1 w-full bg-linear-to-r from-lime-400 via-lime-300 to-cyan-400" />
+          {/* Accent top bar */}
+          <div
+            className="h-0.5 w-full"
+            style={{ background: `linear-gradient(90deg, ${goalMeta.accent}, transparent)` }}
+          />
 
-          <CardHeader className="pb-3 pt-6 px-6 border-b border-white/6">
-            <CardTitle className="text-white text-2xl font-black tracking-tight">
-              Build Your Profile 💪
-            </CardTitle>
-            <CardDescription className="text-zinc-500 mt-1">
-              Tell us about yourself so we can generate your perfect workout plan.
-            </CardDescription>
-          </CardHeader>
-
-          <CardContent className="px-6 pt-3">
-            <form onSubmit={handleAddProfile} className="flex flex-col gap-6 mt-0">
-
-              {/* ── Section 1: Body Metrics ── */}
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-lg">📏</span>
-                  <p className="text-xs font-black uppercase tracking-[0.15em] text-zinc-400">
-                    Body Metrics
-                  </p>
-                  <div className="flex-1 h-px bg-white/6" />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-
-                  {/* Weight */}
-                  <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="weight"
-                      className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-                      Weight
-                    </Label>
-                    <div className="relative group">
-                      <Input
-                        id="weight"
-                        type="number"
-                        name="weight"
-                        value={profileData.weight}
-                        onChange={handleProfile}
-                        placeholder="70"
-                        min="10"
-                        max="500"
-                        required
-                        className="bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-700 pr-10 rounded-lg h-11 text-sm transition-all duration-200 focus:border-lime-400 focus:bg-zinc-800 focus-visible:ring-0 focus-visible:ring-offset-0 focus:shadow-[0_0_0_3px_rgba(163,230,53,0.12)]"
-                      />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] text-zinc-500 font-black group-focus-within:text-lime-400 transition-colors">
-                        kg
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Height */}
-                  <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="height"
-                      className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-                      Height
-                    </Label>
-                    <div className="relative group">
-                      <Input
-                        id="height"
-                        type="number"
-                        name="height"
-                        value={profileData.height}
-                        onChange={handleProfile}
-                        placeholder="175"
-                        min="50"
-                        max="300"
-                        required
-                        className="bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-700 pr-10 rounded-lg h-11 text-sm transition-all duration-200 focus:border-lime-400 focus:bg-zinc-800 focus-visible:ring-0 focus-visible:ring-offset-0 focus:shadow-[0_0_0_3px_rgba(163,230,53,0.12)]"
-                      />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] text-zinc-500 font-black group-focus-within:text-lime-400 transition-colors">
-                        cm
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Live BMI preview */}
-                {profileData.weight > 0 && profileData.height > 0 && (
-                  <div
-                    className="flex items-center justify-between px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800"
-                    style={{ animation: "fadeUp 0.2s ease both" }}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center">
-                        <span className="text-cyan-400 text-[10px] font-black">BMI</span>
-                      </div>
-                      <p className="text-white font-black text-2xl">
-                        {(profileData.weight / ((profileData.height / 100) ** 2)).toFixed(1)}
-                      </p>
-                    </div>
-                    <span className={`text-xs font-bold px-3 py-1.5 rounded-lg border ${
-                      (() => {
-                        const bmi = profileData.weight / ((profileData.height / 100) ** 2);
-                        if (bmi < 18.5) return "text-blue-400 bg-blue-400/10 border-blue-400/30";
-                        if (bmi < 25)   return "text-lime-400 bg-lime-400/10 border-lime-400/30";
-                        if (bmi < 30)   return "text-yellow-400 bg-yellow-400/10 border-yellow-400/30";
-                        return "text-red-400 bg-red-400/10 border-red-400/30";
-                      })()
-                    }`}>
-                      {(() => {
-                        const bmi = profileData.weight / ((profileData.height / 100) ** 2);
-                        if (bmi < 18.5) return "Underweight";
-                        if (bmi < 25)   return "Normal ✅";
-                        if (bmi < 30)   return "Overweight";
-                        return "Obese";
-                      })()}
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              <div className="h-px bg-zinc-800" />
-
-              {/* ── Section 2: Fitness Goal ── */}
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-lg">🎯</span>
-                  <p className="text-xs font-black uppercase tracking-[0.15em] text-zinc-400">
-                    Fitness Goal
-                  </p>
-                  <div className="flex-1 h-px bg-white/6" />
-                </div>
-                <GoalSelector
-                  value={profileData.fitness_goal}
-                  onChange={(val) => handleSelect("fitness_goal", val)}
-                />
-              </div>
-
-              <div className="h-px bg-zinc-800" />
-
-              {/* ── Section 3: Activity Level ── */}
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-lg">⚡</span>
-                  <p className="text-xs font-black uppercase tracking-[0.15em] text-zinc-400">
-                    Activity Level
-                  </p>
-                  <div className="flex-1 h-px bg-white/6" />
-                </div>
-                <ActivitySelector
-                  value={profileData.activity_level}
-                  onChange={(val) => handleSelect("activity_level", val)}
-                />
-              </div>
-
-              <div className="h-px bg-zinc-800" />
-
-              {/* ── Section 4: Workout Duration ── */}
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-lg">⏱️</span>
-                  <p className="text-xs font-black uppercase tracking-[0.15em] text-zinc-400">
-                    Session Duration
-                  </p>
-                  <div className="flex-1 h-px bg-white/6" />
-                </div>
-                <DurationSelector
-                  value={profileData.workout_duration}
-                  onChange={(val) => handleSelect("workout_duration", val)}
-                />
-              </div>
-
-              {/* Error message */}
-              {error && (
-                <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 shrink-0" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" y1="8" x2="12" y2="12" />
-                    <line x1="12" y1="16" x2="12.01" y2="16" />
-                  </svg>
-                  {error}
-                </div>
-              )}
-
-              {/* Submit button */}
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-full py-6 rounded-xl bg-lime-400 hover:bg-lime-300 text-zinc-900 font-black transition-all duration-200 shadow-[0_0_20px_rgba(163,230,53,0.3)] hover:shadow-[0_0_30px_rgba(163,230,53,0.5)] hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 border-none tracking-wide text-sm"
+          {/* ── Avatar + name section ── */}
+          <div className="flex flex-col items-center pt-8 pb-6 px-6 relative">
+            {/* Edit button top right */}
+            {!editing && (
+              <button
+                onClick={() => setEditing(true)}
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700
+                           flex items-center justify-center hover:border-lime-400/50 hover:bg-lime-400/10
+                           transition-all duration-200 group"
               >
-                {loading ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-                    </svg>
-                    Saving Profile…
-                  </span>
-                ) : (
-                  "Save Profile & Generate Plan 🚀"
-                )}
-              </Button>
+                <Pencil className="w-3.5 h-3.5 text-zinc-400 group-hover:text-lime-400 transition-colors" />
+              </button>
+            )}
 
-            </form>
-          </CardContent>
-        </Card>
+            {/* Avatar circle */}
+            <div
+              className="w-20 h-20 rounded-full flex items-center justify-center mb-4 border-2"
+              style={{
+                backgroundColor: `${goalMeta.accent}15`,
+                borderColor:     `${goalMeta.accent}40`,
+                boxShadow:       `0 0 24px ${goalMeta.accent}25`,
+              }}
+            >
+              <UserCircle2
+                className="w-10 h-10"
+                style={{ color: goalMeta.accent }}
+              />
+            </div>
 
-        {/* Already set up link */}
-        <p className="text-center text-sm text-zinc-600 mt-4">
-          Already set up?{" "}
-          <button
-            type="button"
-            onClick={() => navigate("/workout")}
-            className="text-lime-400 hover:text-lime-300 font-semibold transition-colors"
-          >
-            Go to Workout Plan →
-          </button>
-        </p>
+            {/* Goal badge */}
+            <div
+              className="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full mb-1"
+              style={{
+                backgroundColor: `${goalMeta.accent}15`,
+                color:            goalMeta.accent,
+                border:          `1px solid ${goalMeta.accent}30`,
+              }}
+            >
+              {goalMeta.emoji} {GOAL_OPTIONS.find((g) => g.value === profile?.fitness_goal)?.label || "General Fitness"}
+            </div>
 
+            <p className="text-zinc-600 text-xs mt-1">
+              {ACTIVITY_OPTIONS.find((a) => a.value === profile?.activity_level)?.label || "Beginner"} level
+            </p>
+          </div>
+
+          <div className="h-px bg-zinc-800/80 mx-6" />
+
+          {/* ── Stats / Form ── */}
+          <div className="px-6 py-5">
+            {!editing ? (
+              // ── View mode
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { label: "Weight",   value: profile?.weight,           unit: "kg",  icon: Weight },
+                  { label: "Height",   value: profile?.height,           unit: "cm",  icon: Ruler  },
+                  { label: "Duration", value: profile?.workout_duration, unit: "min", icon: Clock  },
+                ].map(({ label, value, unit, icon: Icon }) => (
+                  <div
+                    key={label}
+                    className="rounded-2xl bg-zinc-900/60 border border-zinc-800 p-3 text-center"
+                  >
+                    <Icon className="w-3.5 h-3.5 text-zinc-600 mx-auto mb-1" />
+                    <p className="text-white font-black text-lg leading-none">
+                      {value ?? "—"}
+                    </p>
+                    <p className="text-zinc-600 text-[9px] mt-0.5 uppercase tracking-widest">
+                      {unit} · {label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              // ── Edit mode
+              <div className="flex flex-col gap-3">
+                <div className="grid grid-cols-2 gap-3">
+                  <NumberField label="Weight" icon={Weight} value={form.weight}
+                    onChange={field("weight")} unit="kg" min={10} max={500} />
+                  <NumberField label="Height" icon={Ruler}  value={form.height}
+                    onChange={field("height")} unit="cm" min={50} max={300} />
+                </div>
+                <NumberField label="Workout Duration" icon={Clock} value={form.workout_duration}
+                  onChange={field("workout_duration")} unit="min" min={5} max={300} />
+                <SelectField label="Fitness Goal" icon={Target} value={form.fitness_goal}
+                  onChange={field("fitness_goal")} options={GOAL_OPTIONS} />
+                <SelectField label="Activity Level" icon={Zap} value={form.activity_level}
+                  onChange={field("activity_level")} options={ACTIVITY_OPTIONS} />
+
+                {/* Save / Cancel */}
+                <div className="flex gap-2 mt-1">
+                  <button
+                    onClick={() => { setEditing(false); }}
+                    className="flex-1 py-2.5 rounded-xl border border-zinc-700 text-zinc-400 text-sm
+                               font-semibold hover:bg-zinc-800 transition-all flex items-center justify-center gap-2"
+                  >
+                    <X className="w-4 h-4" /> Cancel
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    disabled={saving}
+                    className="flex-1 py-2.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-zinc-900 text-sm
+                               font-black transition-all flex items-center justify-center gap-2
+                               disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    <Save className="w-4 h-4" />
+                    {saving ? "Saving..." : "Save"}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="h-px bg-zinc-800/80 mx-6" />
+
+          {/* ── Action buttons ── */}
+          <div className="px-6 py-5 flex flex-col gap-2">
+
+            {/* Delete profile */}
+            {!showDeleteConfirm ? (
+              <button
+                onClick={() => setShowDeleteConfirm(true)}
+                className="w-full py-3 rounded-xl border border-red-500/20 bg-red-500/5 text-red-400
+                           text-sm font-bold hover:bg-red-500/10 hover:border-red-500/40
+                           transition-all flex items-center justify-center gap-2"
+              >
+                <Trash2 className="w-4 h-4" />
+                Delete Profile
+              </button>
+            ) : (
+              <div className="rounded-xl border border-red-500/30 bg-red-500/5 p-4">
+                <p className="text-red-400 text-xs font-semibold text-center mb-3">
+                  Are you sure? This cannot be undone.
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setShowDeleteConfirm(false)}
+                    className="flex-1 py-2 rounded-xl border border-zinc-700 text-zinc-400
+                               text-sm font-semibold hover:bg-zinc-800 transition-all"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleDelete}
+                    disabled={deleting}
+                    className="flex-1 py-2 rounded-xl bg-red-500 hover:bg-red-400 text-white
+                               text-sm font-black transition-all disabled:opacity-60"
+                  >
+                    {deleting ? "Deleting..." : "Yes, Delete"}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Logout */}
+            <button
+              onClick={handleLogout}
+              className="w-full py-3 rounded-xl bg-zinc-800/80 border border-zinc-700 text-zinc-300
+                         text-sm font-bold hover:bg-zinc-700 hover:text-white
+                         transition-all flex items-center justify-center gap-2"
+            >
+              <LogOut className="w-4 h-4" />
+              Log Out
+            </button>
+          </div>
+        </div>
       </div>
 
       <style>{`
         @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(8px); }
+          from { opacity: 0; transform: translateY(14px); }
           to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </div>
   );
 }
-
-export default ProfilePage;

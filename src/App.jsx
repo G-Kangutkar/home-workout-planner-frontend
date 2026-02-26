@@ -4,10 +4,11 @@ import './App.css'
 import WorkoutPlanPage from "./pages/workout/workoutPlanPage.jsx";
 import Login from "./pages/auth/loginPage.jsx";
 import Signup from "./pages/auth/signupPage.jsx";
-import ProfilePage from "./pages/profile/ProfilePage.jsx";
 import PerformancePage from "./pages/performance/PerformancePage.jsx";
 import NutritionPage from "./pages/nutrition/nutritionPlan.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import ProfileFormPage from "./pages/profile/ProfileFormPage.jsx";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 function App() {
   
@@ -30,7 +31,8 @@ function App() {
         <Route path="/"        element={<Login />} />
         <Route path="/signup" element={<Signup/>} />
         <Route element={<ProtectedRoute />}>
-        <Route path="/profile" element={<ProfilePage/>}/>
+        <Route path="/profile" element={<ProfileFormPage/>}/>
+        <Route path="/profilepage" element={<ProfilePage/>}/>
         <Route path="/workout" element={<WorkoutPlanPage />} />
         <Route path="/performance" element={<PerformancePage/>}/>
         <Route path="/nutrition" element={<NutritionPage/>}/>
