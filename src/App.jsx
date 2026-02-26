@@ -8,7 +8,7 @@ import PerformancePage from "./pages/performance/PerformancePage.jsx";
 import NutritionPage from "./pages/nutrition/nutritionPlan.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ProfileFormPage from "./pages/profile/ProfileFormPage.jsx";
-import ProfilePage from "./pages/profile/ProfilePage";
+import ProfilePage from "./pages/profile/ProfilePage.jsx";
 
 function App() {
   
