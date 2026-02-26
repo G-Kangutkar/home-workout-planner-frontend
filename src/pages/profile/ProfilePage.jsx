@@ -6,8 +6,8 @@ import {
   Weight, Ruler, Target, Zap, Clock,
 } from "lucide-react";
 import { getProfile, saveProfile, deleteProfile } from "@/lib/api.js";
-import NumberField from "./components/Profile/NumberField.jsx";
-import SelectField from "./components/Profile/SelectFields.jsx";
+import NumberField from "@/components/Profile/NumberField.jsx";
+import SelectField from "@/components/Profile/SelectFields.jsx";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 const GOAL_OPTIONS = [
