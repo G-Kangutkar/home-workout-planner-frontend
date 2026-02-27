@@ -12,25 +12,33 @@ export async function seedOfflineData() {
   try {
     // Cache exercises
     const exerciseRes = await fetchExercises();
-    const exercises = exerciseRes.exercises || exerciseRes;
-    await db.exercises.clear();
-    await db.exercises.bulkPut(exercises);
+    const exercises = Array.isArray(exerciseRes)
+      ? exerciseRes
+      : exerciseRes.exercises || exerciseRes.data || [];
+    if (exercises.length) {
+      await db.exercises.clear();
+      await db.exercises.bulkPut(exercises);
+    }
 
     // Cache workout plan
     const planRes = await fetchActivePlan();
     if (planRes?.plan) {
       await db.workoutPlans.put(planRes.plan);
-      if (planRes.days)      await db.planDays.bulkPut(planRes.days);
-      if (planRes.exercises) await db.planExercises.bulkPut(planRes.exercises);
+      if (Array.isArray(planRes.days))      await db.planDays.bulkPut(planRes.days);
+      if (Array.isArray(planRes.exercises)) await db.planExercises.bulkPut(planRes.exercises);
     }
 
     // Cache history
     const historyRes = await fetchWorkoutHistory(100, 0);
-    const history = historyRes.history || historyRes;
-    await db.workoutHistory.clear();
-    await db.workoutHistory.bulkPut(
-      history.map((h) => ({ ...h, synced: true }))
-    );
+    const history = Array.isArray(historyRes)
+      ? historyRes
+      : historyRes.history || historyRes.data || [];
+    if (history.length) {
+      await db.workoutHistory.clear();
+      await db.workoutHistory.bulkPut(
+        history.map((h) => ({ ...h, synced: true }))
+      );
+    }
 
     console.log("✅ Offline data ready");
   } catch (err) {
