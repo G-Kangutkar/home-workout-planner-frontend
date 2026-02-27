@@ -25,6 +25,7 @@ import Navbar from "@/components/Navbar";
 import CompleteWorkoutButton from "@/components/workout/CompleteWorkoutButton.jsx";
 import SetReminderModal from "@/components/remainder/Remainder.jsx";
 import { getActivePlanOffline, seedOfflineData } from "@/lib/offlineService.js";
+import CalendarSyncButton from "@/components/calendar/CalendarSyncButton.jsx";
 
 //  Background glow decoration 
 function BackgroundDecor() {
@@ -480,7 +481,7 @@ export default function WorkoutPlanPage() {
           {/* Page header */}
           <div className="flex  justify-end gap-3 mb-6 sm:flex-row sm:items-center sm:justify-between sm:mb-8">
             
-
+            <CalendarSyncButton />
             {/* Regenerate button */}
             {plan && (
               <Button
