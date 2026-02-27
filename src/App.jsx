@@ -9,9 +9,20 @@ import NutritionPage from "./pages/nutrition/nutritionPlan.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ProfileFormPage from "./pages/profile/ProfileFormPage.jsx";
 import ProfilePage from "./pages/profile/ProfilePage.jsx";
+import { useEffect } from "react";
+import { seedOfflineData, flushSyncQueue } from "./lib/offlineService.js";
+import WorkoutHistoryPage from "./pages/history/WorkoutHistoryPage.jsx";
 
 function App() {
   
+  useEffect(() => {
+    // Cache data for offline use on every load
+    seedOfflineData();
+
+    // Auto-sync queued workouts when internet returns
+    window.addEventListener("online", flushSyncQueue);
+    return () => window.removeEventListener("online", flushSyncQueue);
+  }, []);
 
   return (
     <BrowserRouter>
@@ -36,6 +47,7 @@ function App() {
         <Route path="/workout" element={<WorkoutPlanPage />} />
         <Route path="/performance" element={<PerformancePage/>}/>
         <Route path="/nutrition" element={<NutritionPage/>}/>
+        <Route path="/history" element={<WorkoutHistoryPage/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -57,6 +57,13 @@ function Navbar() {
             >
               Performance
             </Link>
+            <Link
+  to="/history"
+  className="px-4 py-2 rounded-xl text-sm font-semibold text-zinc-400
+             hover:text-lime-400 hover:bg-white/5 transition-all duration-200"
+>
+  History
+</Link>
 
             {/* Profile avatar — desktop */}
             <Link
@@ -121,6 +128,15 @@ function Navbar() {
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
             Performance
           </Link>
+          <Link
+  to="/history"
+  onClick={() => setMenuOpen(false)}
+  className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold
+             text-zinc-400 hover:text-lime-400 hover:bg-white/5 transition-all duration-200"
+>
+  <span className="w-1.5 h-1.5 rounded-full bg-lime-400 shrink-0" />
+  History
+</Link>
           <Link
             to="/profilepage"
             onClick={() => setMenuOpen(false)}

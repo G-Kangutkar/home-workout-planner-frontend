@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input.jsx";
 import { Label } from "@/components/ui/label.jsx";
 import { CheckCircle2, TrendingUp, Flame } from "lucide-react";
-import { logWorkout } from "@/lib/api.js";
+import { logWorkoutOffline as logWorkout } from "@/lib/api.js";
 import axios from "axios";
 
 export default function CompleteWorkoutButton({ dayId, dayName, exercises }) {
@@ -42,6 +42,13 @@ export default function CompleteWorkoutButton({ dayId, dayName, exercises }) {
       setIsDisable(res.data.alreadyLogged);
     } catch (err) {
       console.error(err);
+      const { db } = await import("@/lib/db");
+    const today = new Date().toLocaleDateString("en-CA"); // "2026-02-27"
+    const logged = await db.workoutHistory
+      .where("day_id").equals(dayId)
+      .filter((h) => h.logged_at.startsWith(today))
+      .first();
+    setIsDisable(!!logged);
     }
   };
 
@@ -75,6 +82,12 @@ export default function CompleteWorkoutButton({ dayId, dayName, exercises }) {
       //  Call adapt-intensity after logging
       try {
         const jwt = localStorage.getItem("token");
+        await logWorkoutOffline({
+  day_id:    dayId,
+  duration:  Number(duration),
+  notes:     notes,
+  logged_at: new Date().toISOString(),
+});
         const res = await axios.post(
           "https://home-workout-planner.onrender.com/api/adapt-intensity",
           { dayId },
