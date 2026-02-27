@@ -12,7 +12,8 @@ import {
 import { Input } from "@/components/ui/input.jsx";
 import { Label } from "@/components/ui/label.jsx";
 import { CheckCircle2, TrendingUp, Flame } from "lucide-react";
-import { logWorkoutOffline as logWorkout } from "@/lib/api.js";
+// import { logWorkout } from "@/lib/api.js";
+import { logWorkoutOffline as logWorkout } from "@/lib/offlineService.js";
 import axios from "axios";
 
 export default function CompleteWorkoutButton({ dayId, dayName, exercises }) {
