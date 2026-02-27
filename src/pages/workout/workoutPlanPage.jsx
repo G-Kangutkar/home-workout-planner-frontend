@@ -472,7 +472,7 @@ export default function WorkoutPlanPage() {
     //     `}</style>
     //     </div>
     //   </div>
-    <div className="w-full overflow-x-hidden relative z-0">
+    <div className="w-full relative z-0">
       <Navbar />
       <div className="min-h-screen w-full relative z-0" style={{ background: "#111318" }}>
         <BackgroundDecor />
@@ -496,11 +496,7 @@ export default function WorkoutPlanPage() {
               </Button>
             )}
           </div>
-          {plan && (
-            <div className="mb-4">
-              <CalendarSyncButton />
-            </div>
-          )}
+         
           {/* Error message */}
           {error && (
             <div className="mb-5 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs sm:text-sm">
@@ -570,11 +566,11 @@ export default function WorkoutPlanPage() {
               </div>
 
               {/* Exercise grid or rest card */}
-              <div key={activeDay} style={{ animation: "fadeUp 0.25s ease both" }}>
+              <div key={activeDay} className="w-full overflow-visible" style={{ animation: "fadeUp 0.25s ease both" }}>
                 {activeDayData?.is_rest_day ? (
                   <RestDayCard goal={plan.goal} />
                 ) : (
-                  <div className="grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 w-full">
                     {activeDayData?.exercises?.map((ex, i) => (
                       <ExerciseCard
                         key={ex.id}
