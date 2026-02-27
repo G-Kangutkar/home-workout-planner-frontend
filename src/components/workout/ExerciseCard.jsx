@@ -34,6 +34,7 @@ export default function ExerciseCard({ exercise, index, onSwap, onRemove }) {
           animationDelay: `${index * 60}ms`,
           animation: "fadeUp 0.3s ease both",
           background: "rgba(24,24,28,0.95)",
+          opacity: 1,
         }}
       >
         <div className={`h-0.5 w-full ${meta.bar}`} />
