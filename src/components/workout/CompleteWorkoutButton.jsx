@@ -73,22 +73,16 @@ export default function CompleteWorkoutButton({ dayId, dayName, exercises }) {
       }));
 
       await logWorkout({
-        day_id:           dayId,
-        day_name:         dayName,
-        duration_minutes: parseInt(duration),
-        exercises:        exercisesData,
-        notes:            notes.trim() || null,
-      });
+      day_id:           dayId,
+      day_name:         dayName,       // ← this is what shows in history page
+      duration_minutes: parseInt(duration),
+      exercises:        exercisesData,
+      notes:            notes.trim() || null,
+      logged_at:        new Date().toISOString(), // ← add this so history sorts correctly
+    });
 
       //  Call adapt-intensity after logging
       try {
-        const jwt = localStorage.getItem("token");
-        await logWorkoutOffline({
-  day_id:    dayId,
-  duration:  Number(duration),
-  notes:     notes,
-  logged_at: new Date().toISOString(),
-});
         const res = await axios.post(
           "https://home-workout-planner.onrender.com/api/adapt-intensity",
           { dayId },
