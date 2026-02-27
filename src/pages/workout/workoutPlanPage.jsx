@@ -20,10 +20,11 @@ import {
   renamePlan,
   swapExercise,
   removeExercise,
-} from "@/lib/api";
+} from "@/lib/api.js";
 import Navbar from "@/components/Navbar";
-import CompleteWorkoutButton from "@/components/workout/CompleteWorkoutButton";
-import SetReminderModal from "@/components/remainder/Remainder";
+import CompleteWorkoutButton from "@/components/workout/CompleteWorkoutButton.jsx";
+import SetReminderModal from "@/components/remainder/Remainder.jsx";
+import { getActivePlanOffline, seedOfflineData } from "@/lib/offlineService.js";
 
 //  Background glow decoration 
 function BackgroundDecor() {
@@ -71,7 +72,7 @@ export default function WorkoutPlanPage() {
     setLoading(true);
     setError("");
     try {
-      const data = await getActivePlan();
+      const data = await getActivePlanOffline();
       const duration =
         data.plan?.workout_duration ||
         data.profile?.workout_duration ||
@@ -94,7 +95,7 @@ export default function WorkoutPlanPage() {
   }, [todayName]);
 
   useEffect(() => { fetchPlan(); 
-    
+     seedOfflineData()
   }, [fetchPlan]);
 
   //  Generate plan 
