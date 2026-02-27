@@ -1,6 +1,4 @@
-import {
-  getCalendarStatus as _getStatus,
-} from "./api.js";
+import api from "@/lib/api.js";
 
 // ── Get Google OAuth URL and redirect user ────────────────────────────────────
 export async function connectGoogleCalendar() {
