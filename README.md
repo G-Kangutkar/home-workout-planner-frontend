@@ -38,6 +38,8 @@ It provides auto-generated routines, adaptive intensity levels, progress trackin
 | 🥗 **Nutrition Planning** | Goal-based meal plans with Indian vegetarian recipes |
 | ⏱️ **Exercise Timer** | Built-in interval and rest timers |
 | 🧘 **Recovery Guidance** | Rest day and wellness recommendations |
+| 📅 **Google Calendar Sync** |Syncs your full weekly workout plan and meal prep schedule directly to Google Calendar |
+| 📶 **Offline Mode** | App works fully offline after first load — no internet required to view your workout plan |
 
 ---
 
@@ -53,6 +55,7 @@ It provides auto-generated routines, adaptive intensity levels, progress trackin
 | **HTTP Client** | Axios |
 | **Notifications** | Sonner + Firebase |
 | **Services** | Firebase (Push Notifications) |
+| **Local database** | IndexedDB |
 
 ---
 
