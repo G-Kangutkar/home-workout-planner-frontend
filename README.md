@@ -10,7 +10,7 @@
 [![Firebase](https://img.shields.io/badge/Firebase-Enabled-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
 [![shadcn/ui](https://img.shields.io/badge/shadcn-ui-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://ui.shadcn.com/)
 
-🌍 **Live Demo:** [https://cosmic-paletas-3425dc.netlify.app](https://cosmic-paletas-3425dc.netlify.app)  
+🌍 **Live Demo:** [https://home-workout-planner.vercel.app](https://home-workout-planner.vercel.app) 
 🔗 **Backend API:** [https://home-workout-planner.onrender.com](https://home-workout-planner.onrender.com)
 
 </div>
