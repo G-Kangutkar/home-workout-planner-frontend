@@ -80,7 +80,9 @@ export default function CompleteWorkoutButton({ dayId, dayName, exercises }) {
       notes:            notes.trim() || null,
       logged_at:        new Date().toISOString(), // ← add this so history sorts correctly
     });
-
+    console.log("✅ logWorkout done, about to call adapt-intensity");
+        const jwt = localStorage.getItem("token");
+        console.log("JWT:", jwt);
       //  Call adapt-intensity after logging
       try {
         const res = await axios.post(
