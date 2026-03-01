@@ -10,8 +10,9 @@
 [![Firebase](https://img.shields.io/badge/Firebase-Enabled-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
 [![shadcn/ui](https://img.shields.io/badge/shadcn-ui-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://ui.shadcn.com/)
 
-🌍 **Live Demo:** [https://home-workout-planner.vercel.app](https://home-workout-planner.vercel.app) 
-🔗 **Backend API:** [https://home-workout-planner.onrender.com](https://home-workout-planner.onrender.com)
+🌍 **Live Demo:** [https://home-workout-planner.vercel.app](https://home-workout-planner.vercel.app)  
+🔗 **Backend API:** [https://home-workout-planner.onrender.com](https://home-workout-planner.onrender.com)  
+📹 **Video Walkthrough link** [https://drive.google.com/file/d/1EojgzWx-s7M011CAcTXks3RTbVlgYdvN/view?usp=drive_link](https://drive.google.com/file/d/1EojgzWx-s7M011CAcTXks3RTbVlgYdvN/view?usp=drive_link)
 
 </div>
 
