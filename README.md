@@ -12,7 +12,7 @@
 
 🌍 **Live Demo:** [https://home-workout-planner.vercel.app](https://home-workout-planner.vercel.app)  
 🔗 **Backend API:** [https://home-workout-planner.onrender.com](https://home-workout-planner.onrender.com)  
-📹 **Video Walkthrough link** [https://drive.google.com/file/d/1EojgzWx-s7M011CAcTXks3RTbVlgYdvN/view?usp=drive_link](https://drive.google.com/file/d/1EojgzWx-s7M011CAcTXks3RTbVlgYdvN/view?usp=drive_link)
+📹 **Video Walkthrough link** [https://drive.google.com/file/d/1a6cvBDFfQ1SEtZ_GDrr-3Kd40CMUuJUb/view?usp=sharing](https://drive.google.com/file/d/1a6cvBDFfQ1SEtZ_GDrr-3Kd40CMUuJUb/view?usp=sharing)
 
 </div>
 
